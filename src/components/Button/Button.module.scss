@@ -1,0 +1,47 @@
+.loader > path {
+    fill: var(--button-primary-text);
+}
+
+
+.primary {
+    &__default {
+        background-color: var(--button-primary-bg);
+        color: var(--button-primary-text);
+        border: none;
+        cursor: pointer;
+    }
+
+    &__simple {
+        padding: 17px 20px;
+    }
+
+    &__loading {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 8px;
+        padding: 14px 20px;
+    }
+
+    &__simple:hover {
+        background-color: var(--button-primary-bg-hover);
+        color: var(--button-primary-text-hover);
+    }
+
+    &__simple:active {
+        background-color: var(--button-primary-bg-active);
+        color: var(--button-primary-text-active);
+    }
+
+    &__simple:disabled {
+        background-color: var(--button-primary-bg-disabled);
+        color: var(--button-primary-text-disabled);
+    }
+
+    &__disabled {
+        background-color: var(--button-primary-bg-disabled);
+        color: var(--button-primary-text-disabled);
+    }
+}
+
+

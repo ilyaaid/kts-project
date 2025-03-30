@@ -1,0 +1,27 @@
+.fill {
+  &_primary {
+    fill: var(--color-primary);
+  }
+
+  &_secondary {
+    fill: var(--color-secondary);
+  }
+
+  &_accent {
+    fill: var(--color-accent);
+  }
+}
+
+.stroke {
+  &_primary > path {
+    stroke: var(--color-primary);
+  }
+
+  &_secondary > path {
+    stroke: var(--color-secondary);
+  }
+
+  &_accent > path {
+    stroke: var(--color-accent);
+  }
+}

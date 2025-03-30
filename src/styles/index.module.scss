@@ -1,0 +1,16 @@
+@import url("styles/variables.module.scss");
+
+@font-face {
+  font-family: "Roboto";
+  src: url("fonts/Roboto/Roboto-VariableFont_wdth,wght.ttf");
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
