@@ -1,5 +1,4 @@
 import axios from 'axios';
-import classNames from 'classnames';
 import * as qs from 'qs';
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router';
@@ -9,6 +8,7 @@ import Text from 'components/Text';
 import ArrowRightIcon from 'components/icons/ArrowRightIcon';
 import { STRAPI_URL, API_TOKEN } from 'config/api';
 import { routes } from 'config/routes';
+import CircleArrow from './components/CircleArrow';
 import styles from './Product.module.scss';
 
 export type ProductImageType = {
@@ -25,20 +25,6 @@ export type ProductType = {
   price: number;
   isInStock: boolean;
   images: ProductImageType[];
-};
-
-type CircleArrowRightProps = {
-  className?: string;
-  disabled?: boolean;
-};
-
-const CircleArrowRight: React.FC<CircleArrowRightProps> = ({ className, disabled, ...others }) => {
-  const classes = classNames(className, styles.circle);
-  return (
-    <button {...others} className={classes} disabled={disabled}>
-      <ArrowRightIcon className={styles.circle__arrow}></ArrowRightIcon>
-    </button>
-  );
 };
 
 const Product: React.FC = () => {
@@ -81,8 +67,8 @@ const Product: React.FC = () => {
           <div className={styles.image}>
             {product?.images[0].url && (
               <>
-                <CircleArrowRight className={styles.circle_left}></CircleArrowRight>
-                <CircleArrowRight></CircleArrowRight>
+                <CircleArrow className={styles.image__left}></CircleArrow>
+                <CircleArrow className={styles.image__right}></CircleArrow>
               </>
             )}
             <img className={styles.image__el} src={product?.images[0].url ?? '/picture.svg'}></img>

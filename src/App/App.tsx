@@ -1,6 +1,6 @@
 import React from 'react';
 import { Outlet } from 'react-router';
-import Header from 'App/components/Header';
+import Header from './components/Header';
 import './App.module.scss';
 
 export default function App() {

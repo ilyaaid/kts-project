@@ -1,0 +1,22 @@
+.products {
+  &__inner {
+    padding-top: 100px;
+    padding-bottom: 100px;
+  }
+}
+
+.intro {
+  width: 50%;
+  margin: auto;
+  margin-bottom: 58px;
+
+  &__title {
+    margin-bottom: 24px;
+    text-align: center;
+  }
+
+  &__description {
+    text-align: center;
+  }
+}
+

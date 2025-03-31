@@ -1,3 +1,5 @@
+@use "styles/variables.scss" as *;
+
 .header {
   width: 100%;
   background-color: #ffffff;
@@ -24,17 +26,17 @@
     &__link {
       display: flex;
       align-items: center;
-      color: var(--text-primary);
+      color: $text-primary;
       text-decoration: none;
       height: 100%;
       padding: 0 3px;
 
       &:hover {
-        color: var(--text-accent);
+        color: $text-accent;
       }
 
       &_active {
-        border-bottom: 2px solid var(--brand);
+        border-bottom: 2px solid $brand;
         margin-bottom: -2px;
       }
 

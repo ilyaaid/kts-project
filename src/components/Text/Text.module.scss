@@ -1,3 +1,6 @@
+@use "styles/mixins.scss" as *;
+@use "styles/variables.scss" as *;
+
 .default {
   font-family: "Roboto";
   font-weight: inherit;
@@ -8,73 +11,59 @@
 
 .view {
   &_button {
-    font-weight: 400;
-    font-size: 18px;
-    line-height: 18px;
+    @include text_params(400, 18px, 18px);
   }
 
   &_title {
-    font-weight: 700;
-    font-size: 44px;
-    line-height: 48px;
+    @include text_params(700, 44px, 48px);
   }
 
   &_subtitle {
-    font-weight: 700;
-    font-size: 32px;
-    line-height: 32px;
+    @include text_params(700, 32px, 32px);
   }
 
   &_p-20 {
-    font-weight: 400;
-    font-size: 20px;
-    line-height: 24px;
+    @include text_params(400, 20px, 24px);
   }
 
   &_p-18 {
-    font-weight: 400;
-    font-size: 18px;
-    line-height: 22px;
+    @include text_params(400, 18px, 22px);
   }
 
   &_p-16 {
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 20px;
+    @include text_params(400, 16px, 20px);
   }
 
   &_p-14 {
-    font-weight: 400;
-    font-size: 14px;
-    line-height: 18px;
+    @include text_params(400, 14px, 18px);
   }
 }
 
 .weight {
   &_normal {
-    font-weight: var(--text-weight-normal);
+    font-weight: $text-weight-normal;
   }
 
   &_medium {
-    font-weight: var(--text-weight-medium);
+    font-weight: $text-weight-medium;
   }
 
   &_bold {
-    font-weight: var(--text-weight-bold);
+    font-weight: $text-weight-bold;
   }
 }
 
 .color {
   &_primary {
-    color: var(--text-primary);
+    color: $text-primary;
   }
 
   &_secondary {
-    color: var(--text-secondary);
+    color: $text-secondary;
   }
 
   &_accent {
-    color: var(--text-accent);
+    color: $text-accent;
   }
 }
 

@@ -1,3 +1,5 @@
+@use "styles/variables.scss" as *;
+
 .back {
   margin-bottom: 32px;
 
@@ -9,8 +11,8 @@
 
     // TODO Fix *
     &:hover * {
-      stroke: var(--text-secondary);
-      color: var(--text-secondary);
+      stroke: $text-secondary;
+      color: $text-secondary;
     }
   }
 
@@ -43,6 +45,18 @@
     object-fit: cover;
     object-position: center;
   }
+
+  &__left {
+    left: 24px;
+    top: 50%;
+    transform: translate(0, -50%) rotate(180deg);
+  }
+
+  &__right {
+    right: 24px;
+    top: 50%;
+    transform: translate(0, -50%);
+  }
 }
 
 .desc {
@@ -66,7 +80,7 @@
     gap: 48px;
 
     &__item {
-        padding: 17px 32px;
+      padding: 17px 32px;
     }
   }
 }
@@ -82,49 +96,5 @@
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 80px;
-
-  }
-}
-
-// Cricle Arrow
-
-.circle {
-  width: 64px;
-  height: 64px;
-  border: none;
-  position: absolute;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: #000000;
-  box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.2);
-  border-radius: 50%;
-  cursor: pointer;
-
-  right: 24px;
-  top: 50%;
-  transform: translate(0, -50%);
-
-  &:hover {
-    opacity: 0.6;
-  }
-
-  &:disabled {
-    opacity: 0.6;
-  }
-
-  &_left {
-    left: 24px;
-    top: 50%;
-    transform: translate(0, -50%) rotate(180deg);
-  }
-
-  &__arrow {
-    width: 50%;
-    height: 50%;
-
-    & > path {
-      stroke: #ffffff;
-    }
   }
 }

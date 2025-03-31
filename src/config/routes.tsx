@@ -1,8 +1,8 @@
 import React from 'react';
 import { Navigate, RouteObject } from 'react-router';
 import App from 'App/';
-import Product from 'App/pages/Product';
-import Products from 'App/pages/Products';
+import Product from 'pages/Product';
+import Products from 'pages/Products';
 
 export const routes = {
   main: {
@@ -42,11 +42,11 @@ export const routesConfig: RouteObject[] = [
     children: [
       {
         path: routes.products.mask,
-        element: <Products></Products>,
+        element: <Products />,
       },
       {
         path: routes.product.mask,
-        element: <Product></Product>,
+        element: <Product />,
       },
       {
         path: routes.categories.mask,

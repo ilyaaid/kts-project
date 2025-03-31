@@ -23,6 +23,7 @@
     "baseUrl": "src",
     "paths": {
       "App": ["App/*"],
+      "pages": ["pages/*"],
       "components": ["components/*"],
       "config": ["config/*"],
       "styles": ["styles/*"],

@@ -1,5 +1,7 @@
+@use "styles/variables.scss" as *;
+
 .default {
-  background-color: var(--card-bg);
+  background-color: $card-bg;
   transition: box-shadow 0.2s ease-in;
   display: flex;
   flex-direction: column;
@@ -10,7 +12,7 @@
 }
 
 .img {
-  background-color: var(--card-image-bg);
+  background-color: $card-image-bg;
 }
 
 .img > img {
@@ -44,6 +46,6 @@
 .link {
   text-decoration: none;
   &:hover div {
-    color: var(--text-accent);
+    color: $text-accent;
   }
 }
