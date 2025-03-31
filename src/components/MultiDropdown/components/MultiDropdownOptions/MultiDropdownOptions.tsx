@@ -1,11 +1,11 @@
 import classNames from 'classnames';
 import React from 'react';
-import { MultiDropDownPropsOptions, Option } from 'components/MultiDropdown';
+import { type MultiDropDownPropsOptions, Option } from 'components/MultiDropdown';
 import Text from 'components/Text';
 import styles from './MultiDropdownOptions.module.scss';
 
 const MultiDropDownOptions: React.FC<MultiDropDownPropsOptions> = (props) => {
-  const { options, value, onChange } = props;
+  const { optionsVal, value, onChange } = props;
   const indInValue = (opt: Option) => value.findIndex((item) => item.key === opt.key);
   const handleClickOption = (opt: Option) => {
     if (indInValue(opt) !== -1) {
@@ -17,7 +17,7 @@ const MultiDropDownOptions: React.FC<MultiDropDownPropsOptions> = (props) => {
 
   return (
     <div className={styles['options']}>
-      {options.map((opt) => {
+      {optionsVal.map((opt) => {
         const classesOption = classNames(styles['options__item'], {
           [styles['options__item_add']]: indInValue(opt) !== -1,
         });
