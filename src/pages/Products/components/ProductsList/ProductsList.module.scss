@@ -1,0 +1,18 @@
+.list {
+  &__title {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    margin-bottom: 35px;
+  }
+
+  &__items {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 80px;
+  }
+
+  &__item {
+    text-decoration: none;
+  }
+}
