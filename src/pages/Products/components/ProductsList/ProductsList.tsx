@@ -40,6 +40,7 @@ const ProductsList: React.FC<ProductsProps> = ({ productsStore }) => {
           current={productsStore.paginator.meta.pagination.page}
           pageCount={productsStore.paginator.meta.pagination.pageCount}
           onChange={(newP) => {
+            window.scrollTo(0, 0);
             productsStore.paginator.getPage(newP);
           }}
         ></Paginator>
