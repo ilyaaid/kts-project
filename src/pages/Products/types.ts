@@ -1,5 +1,5 @@
-import ProductsStore from "store/ProductsStore"
+import ProductsStore from 'store/ProductsStore';
 
 export type ProductsProps = {
-    productsStore: ProductsStore;
-}
+  productsStore: ProductsStore;
+};

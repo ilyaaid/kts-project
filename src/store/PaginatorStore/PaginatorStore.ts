@@ -1,7 +1,7 @@
 import { action, computed, IReactionDisposer, makeObservable, observable, reaction } from 'mobx';
 import * as qs from 'qs';
 import rootStore from 'store/RootStore';
-import { MetaModel, normalizeMeta } from 'store/models/Meta';
+import { MetaModel } from 'store/models/Meta';
 import { ILocalStore } from 'utils/useLocalStore';
 
 type PrivateFields = '_meta';
@@ -26,6 +26,10 @@ export default class PaginatorStore implements ILocalStore {
 
   setMeta(val: MetaModel) {
     this._meta = val;
+    if (this._meta.pagination.page > this._meta.pagination.pageCount) {
+      this._meta.pagination.page = this._meta.pagination.pageCount;
+      this.getPage(this.meta.pagination.page);
+    }
   }
 
   getPage(page: number) {
@@ -43,6 +47,7 @@ export default class PaginatorStore implements ILocalStore {
   initialData() {
     this._getUrlInitialData();
   }
+
   destroy() {
     this._urlCategoriesReaction();
   }

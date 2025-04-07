@@ -12,7 +12,6 @@ function categoriesToOptions(categories: ProductCategoryModel[]) {
 }
 
 const ProductsSearch: React.FC<ProductsProps> = ({ productsStore }) => {
-
   const options: Option[] = categoriesToOptions(productsStore.filters.allCategories);
 
   const handleChangeInput = React.useCallback(

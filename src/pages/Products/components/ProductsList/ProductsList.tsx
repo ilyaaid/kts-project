@@ -9,18 +9,8 @@ import { ProductsProps } from 'pages/Products';
 import styles from './ProductsList.module.scss';
 
 const ProductsList: React.FC<ProductsProps> = ({ productsStore }) => {
-  
   return (
     <section className={styles.list}>
-      <div className={styles.list__paginator}>
-        <Paginator
-          current={productsStore.paginator.meta.pagination.page}
-          pageCount={productsStore.paginator.meta.pagination.pageCount}
-          onChange={(newP) => {
-            productsStore.paginator.getPage(newP);
-          }}
-        ></Paginator>
-      </div>
       <div className={styles.list__title}>
         <Text tag="div" view="subtitle">
           Total products
@@ -44,6 +34,15 @@ const ProductsList: React.FC<ProductsProps> = ({ productsStore }) => {
             ></Card>
           );
         })}
+      </div>
+      <div className={styles.list__paginator}>
+        <Paginator
+          current={productsStore.paginator.meta.pagination.page}
+          pageCount={productsStore.paginator.meta.pagination.pageCount}
+          onChange={(newP) => {
+            productsStore.paginator.getPage(newP);
+          }}
+        ></Paginator>
       </div>
     </section>
   );

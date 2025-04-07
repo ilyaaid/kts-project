@@ -11,8 +11,7 @@ export default class QueryParamsStore {
 
   private _changeQueryParamsUrl: null | ((params: string) => void) = null;
 
-  constructor(changeQueryParamsUrl: (params: string) => void) {
-    this._changeQueryParamsUrl = changeQueryParamsUrl;
+  constructor() {
     makeObservable<QueryParamsStore, PrivateFields>(this, {
       _params: observable.ref,
       setSearch: action,

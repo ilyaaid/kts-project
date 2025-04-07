@@ -1,2 +1,2 @@
 export { default } from './Products';
-export * from './types'
+export * from './types';

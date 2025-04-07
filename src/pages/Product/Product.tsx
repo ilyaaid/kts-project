@@ -1,5 +1,4 @@
 import { observer } from 'mobx-react-lite';
-import * as qs from 'qs';
 import React from 'react';
 import { useNavigate, useParams } from 'react-router';
 import Button from 'components/Button';

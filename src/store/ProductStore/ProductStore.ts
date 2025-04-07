@@ -30,7 +30,6 @@ export default class ProductStore implements ILocalStore {
     const fetch = async () => {
       const resp = await axios.get(`${STRAPI_URL}/products/${id}?${queryStr}`, {
         headers: {
-
           Authorization: `Bearer ${API_TOKEN}`,
         },
       });

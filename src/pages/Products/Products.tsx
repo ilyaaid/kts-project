@@ -12,7 +12,7 @@ const Products: React.FC = () => {
   React.useEffect(() => {
     productsStore.initialData();
   }, [productsStore]);
-  
+
   return (
     <div className="container">
       <div className={styles.products__inner}>
