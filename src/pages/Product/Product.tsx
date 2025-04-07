@@ -1,56 +1,32 @@
-import axios from 'axios';
+import { observer } from 'mobx-react-lite';
 import * as qs from 'qs';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useNavigate, useParams } from 'react-router';
 import Button from 'components/Button';
 import Card from 'components/Card';
 import Text from 'components/Text';
 import ArrowRightIcon from 'components/icons/ArrowRightIcon';
-import { STRAPI_URL, API_TOKEN } from 'config/api';
 import { routes } from 'config/routes';
+import ProductStore from 'store/ProductStore';
+import { useLocalStore } from 'utils/useLocalStore';
 import CircleArrow from './components/CircleArrow';
 import styles from './Product.module.scss';
-
-export type ProductImageType = {
-  id: number;
-  url: string;
-  alternativeText: string;
-};
-
-export type ProductType = {
-  id: number;
-  documentId: string;
-  title: string;
-  description: string;
-  price: number;
-  isInStock: boolean;
-  images: ProductImageType[];
-};
 
 const Product: React.FC = () => {
   const params = useParams();
   const navigate = useNavigate();
 
-  const [product, setProduct] = useState<ProductType>();
+  const productStore = useLocalStore<ProductStore>(() => new ProductStore());
 
-  useEffect(() => {
+  React.useEffect(() => {
     window.scrollTo(0, 0);
-    const queryStr = qs.stringify({
-      populate: ['images', 'productCategory'],
-    });
-    const fetch = async () => {
-      const resp = await axios.get(`${STRAPI_URL}/products/${params.id}?${queryStr}`, {
-        headers: {
-          Authorization: `Bearer ${API_TOKEN}`,
-        },
-      });
-      // console.log(resp.data);
-      setProduct(resp.data.data);
-    };
+    if (params.id) {
+      productStore.getProduct(params.id);
+    }
+  }, [productStore, params.id]);
 
-    fetch();
-  }, [params.id]);
-  // console.log(params);
+  const product = productStore.product;
+
   return (
     <div className="container">
       <div className={styles.inner}>
@@ -132,4 +108,4 @@ const Product: React.FC = () => {
   );
 };
 
-export default Product;
+export default observer(Product);

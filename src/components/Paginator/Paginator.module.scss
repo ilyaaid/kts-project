@@ -1,0 +1,29 @@
+.paginator {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  &__arrow {
+    padding: 0;
+    background-color: transparent;
+    cursor: pointer;
+
+    &_left {
+      transform: rotate(180deg);
+    }
+
+    &_disabled path {
+      opacity: 0.3;
+    }
+  }
+
+  &__item {
+    padding: 10px 15px;
+    cursor: pointer;
+
+
+    &_active {
+        color: #FFFFFF;
+        background-color: #518581;
+    }
+  }
+}

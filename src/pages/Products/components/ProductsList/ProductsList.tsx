@@ -1,52 +1,42 @@
-import axios from 'axios';
-import * as qs from 'qs';
-import React, { useEffect, useState } from 'react';
+import { observer } from 'mobx-react-lite';
+import React from 'react';
 import Button from 'components/Button';
 import Card from 'components/Card';
+import Paginator from 'components/Paginator';
 import Text from 'components/Text';
-import { API_TOKEN, STRAPI_URL } from 'config/api';
 import { routes } from 'config/routes';
-import { ProductType } from 'pages/Product';
+import { ProductsProps } from 'pages/Products';
 import styles from './ProductsList.module.scss';
 
-const ProductsList = () => {
-  const [productsTotal, setProductsTotal] = useState<number>(0);
-  const [products, setProducts] = useState<ProductType[]>([]);
-  useEffect(() => {
-    const queryStr = qs.stringify({
-      populate: ['images', 'productCategory'],
-    });
-    const fetch = async () => {
-      const resp = await axios.get(`${STRAPI_URL}/products?${queryStr}`, {
-        headers: {
-          Authorization: `Bearer ${API_TOKEN}`,
-        },
-      });
-      // console.log(resp.data);
-      setProducts(resp.data.data);
-      setProductsTotal(resp.data.meta.pagination.total);
-    };
-
-    fetch();
-  }, []);
+const ProductsList: React.FC<ProductsProps> = ({ productsStore }) => {
+  
   return (
     <section className={styles.list}>
+      <div className={styles.list__paginator}>
+        <Paginator
+          current={productsStore.paginator.meta.pagination.page}
+          pageCount={productsStore.paginator.meta.pagination.pageCount}
+          onChange={(newP) => {
+            productsStore.paginator.getPage(newP);
+          }}
+        ></Paginator>
+      </div>
       <div className={styles.list__title}>
         <Text tag="div" view="subtitle">
           Total products
         </Text>
         <Text tag="div" view="p-20" color="accent" weight="bold">
-          {productsTotal}
+          {productsStore.paginator.meta?.pagination.total ?? 0}
         </Text>
       </div>
       <div className={styles.list__items}>
-        {products.map((p) => {
+        {productsStore.products?.map((p) => {
           return (
             <Card
               key={p.id}
               className={styles.list__item}
               image={p.images[0] ? p.images[0].url : '/picture.svg'}
-              title={p.title + 'fgdsfg'}
+              title={p.title}
               subtitle={p.description}
               contentSlot={p.price + '$'}
               actionSlot={<Button>Купить</Button>}
@@ -59,4 +49,4 @@ const ProductsList = () => {
   );
 };
 
-export default ProductsList;
+export default observer(ProductsList);

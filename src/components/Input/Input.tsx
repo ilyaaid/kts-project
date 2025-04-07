@@ -30,7 +30,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>((props, ref) => {
         ref={ref}
         type="text"
         className={classes}
-        defaultValue={value}
+        value={value}
         onChange={handleChange}
         placeholder={placeholder}
         disabled={disabled}

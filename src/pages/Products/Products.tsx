@@ -1,10 +1,18 @@
+import { observer } from 'mobx-react-lite';
 import React from 'react';
 import Text from 'components/Text';
+import ProductsStore from 'store/ProductsStore';
+import { useLocalStore } from 'utils/useLocalStore';
 import ProductsList from './components/ProductsList';
 import ProductsSearch from './components/ProductsSearch';
 import styles from './Procuts.module.scss';
 
 const Products: React.FC = () => {
+  const productsStore = useLocalStore<ProductsStore>(() => new ProductsStore());
+  React.useEffect(() => {
+    productsStore.initialData();
+  }, [productsStore]);
+  
   return (
     <div className="container">
       <div className={styles.products__inner}>
@@ -17,11 +25,11 @@ const Products: React.FC = () => {
             the name of the item
           </Text>
         </section>
-        <ProductsSearch></ProductsSearch>
-        <ProductsList></ProductsList>
+        <ProductsSearch productsStore={productsStore}></ProductsSearch>
+        <ProductsList productsStore={productsStore}></ProductsList>
       </div>
     </div>
   );
 };
 
-export default Products;
+export default observer(Products);
