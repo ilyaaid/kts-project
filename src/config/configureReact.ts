@@ -1,1 +1,1 @@
-export const STRICT_MODE: boolean = true;
+export const STRICT_MODE: boolean = false;

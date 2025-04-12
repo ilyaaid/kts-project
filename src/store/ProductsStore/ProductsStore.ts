@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { computed, IReactionDisposer, makeObservable, observable, reaction, runInAction } from 'mobx';
+import { action, computed, IReactionDisposer, makeObservable, observable, reaction, runInAction } from 'mobx';
 import * as qs from 'qs';
 import { STRAPI_URL, API_TOKEN } from 'config/api';
 import Paginator from 'store/PaginatorStore';
@@ -15,27 +15,33 @@ import {
 } from 'store/models/shared/collection';
 import logger from 'utils/logger';
 import { ILocalStore } from 'utils/useLocalStore';
-import { QOptions } from './types';
+import { ProductsMeta, QOptions } from './types';
 
-type PrivateFields = '_products';
+type PrivateFields = '_products' | '_meta' | '_setIsLoading';
 
 export default class ProductsStore implements ILocalStore {
   readonly filters: ProductsFiltersStore = new ProductsFiltersStore();
   readonly paginator: Paginator = new Paginator({
-    pagination: {
-      page: 1,
-      pageSize: 9,
-      pageCount: 0,
-      total: 0,
-    },
+    page: 0,
+    pageSize: 6,
+    pageCount: 0,
+    total: 0,
   });
 
   private _products: CollectionModel<string, ProductModel> = getInitialCollectionModel();
+  private _meta: ProductsMeta = {
+    loading: true,
+  };
 
   constructor() {
     makeObservable<ProductsStore, PrivateFields>(this, {
       _products: observable.ref,
+      _meta: observable,
       products: computed,
+      meta: computed,
+      _getProducts: action,
+      _setIsLoading: action,
+      destroy: action,
     });
   }
 
@@ -43,16 +49,24 @@ export default class ProductsStore implements ILocalStore {
     return linearizeCollection(this._products);
   }
 
-  async updateProducts() {
+  get meta() {
+    return this._meta;
+  }
+
+  private _setIsLoading(val: boolean) {
+    this._meta.loading = val;
+  }
+
+  async _getProducts() {
     const qOptions: QOptions = {
       populate: ['images', 'productCategory'],
       pagination: {
-        page: this.paginator.meta.pagination.page,
-        pageSize: this.paginator.meta.pagination.pageSize,
+        page: this.paginator.params.page,
+        pageSize: this.paginator.params.pageSize,
       },
     };
 
-    if (this.filters.selTitle.trim() !== '') {
+    if (this.filters.selTitle !== '') {
       qOptions.filters = {
         title: {
           $containsi: this.filters.selTitle,
@@ -70,6 +84,7 @@ export default class ProductsStore implements ILocalStore {
       };
     }
 
+    this._setIsLoading(true);
     const queryStr = qs.stringify(qOptions);
     const resp = await axios.get(`${STRAPI_URL}/products?${queryStr}`, {
       headers: {
@@ -82,30 +97,33 @@ export default class ProductsStore implements ILocalStore {
         (el: ProductModel) => el.documentId,
       );
       const meta = normalizeMeta(resp.data.meta);
-      this.paginator.setMeta(meta);
+      this.paginator.setParams({
+        page: meta.pagination.page,
+        pageSize: meta.pagination.pageSize,
+        pageCount: meta.pagination.pageCount,
+        total: meta.pagination.total,
+      });
       runInAction(() => {
         this._products = data;
       });
+      this._setIsLoading(false);
     } catch (err) {
       logger.error(err);
     }
   }
 
-  async initialData() {
-    await this.filters.initialData();
-    this.paginator.initialData();
-  }
-
   destroy() {
+    this.filters.destroy();
     this._products = getInitialCollectionModel();
     this._urlReaction();
-    this.filters.destroy();
   }
 
   private readonly _urlReaction: IReactionDisposer = reaction(
     () => rootStore.query.params,
     () => {
-      this.updateProducts();
+      this.filters.getAllParams();
+      this.paginator.getAllParams();
+      this._getProducts();
     },
   );
 }

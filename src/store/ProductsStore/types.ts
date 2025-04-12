@@ -1,3 +1,7 @@
+export type ProductsMeta = {
+  loading: boolean;
+};
+
 export type QOptions = {
   populate: string[];
   filters?: {

@@ -3,7 +3,7 @@ import React from 'react';
 import Button from 'components/Button';
 import Input from 'components/Input';
 import MultiDropdown, { Option } from 'components/MultiDropdown';
-import { ProductsProps } from 'pages/Products';
+import { useProductsContext } from 'pages/Products';
 import { ProductCategoryModel } from 'store/models/Product';
 import styles from './ProductsSearch.module.scss';
 
@@ -11,7 +11,9 @@ function categoriesToOptions(categories: ProductCategoryModel[]) {
   return categories.map((cat) => ({ key: cat.documentId, value: cat.title }));
 }
 
-const ProductsSearch: React.FC<ProductsProps> = ({ productsStore }) => {
+const ProductsSearch: React.FC = () => {
+  const productsStore = useProductsContext()!;
+
   const options: Option[] = categoriesToOptions(productsStore.filters.allCategories);
 
   const handleChangeInput = React.useCallback(

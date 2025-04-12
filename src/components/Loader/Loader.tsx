@@ -1,6 +1,8 @@
 import classNames from 'classnames';
 import React from 'react';
 
+import styles from './Loader.module.scss';
+
 export type LoaderProps = {
   /** Размер */
   size?: 's' | 'm' | 'l';
@@ -10,7 +12,7 @@ export type LoaderProps = {
 
 const Loader: React.FC<LoaderProps> = ({ size = 'l', className }: LoaderProps) => {
   const wh = size === 'l' ? 60 : size === 'm' ? 48 : 24;
-  const classes = classNames(className);
+  const classes = classNames(styles.default, className);
   return (
     <svg className={classes} width={wh} height={wh} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path

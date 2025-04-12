@@ -13,8 +13,8 @@ export type PaginatorProps = {
 
 const Paginator: React.FC<PaginatorProps> = ({ current, pageCount, className, onChange, ...others }) => {
   const classes = classNames(styles.paginator, className);
-  const isStart = current === 1;
-  const isEnd = current === pageCount;
+  const isStart = current <= 1;
+  const isEnd = current >= pageCount;
   const classesArrowLeft = classNames(styles.paginator__arrow, styles.paginator__arrow_left, {
     [styles.paginator__arrow_disabled]: isStart,
   });

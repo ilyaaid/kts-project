@@ -11,7 +11,7 @@ export default function App() {
 
   React.useEffect(() => {
     rootStore.query.setSearch(loc.search);
-    rootStore.query.setChangeUrlFunc((params: string) => {
+    rootStore.query.setChangeUrlParamFunc((params: string): void => {
       navigate(`${loc.pathname}?${params}`);
     });
   }, [loc.pathname, loc.search, navigate]);

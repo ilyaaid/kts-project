@@ -23,6 +23,7 @@
     "baseUrl": "src",
     "paths": {
       "App": ["App/*"],
+      "api": ["api/*"],
       "store": ["store/*"],
       "pages": ["pages/*"],
       "components": ["components/*"],

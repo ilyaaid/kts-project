@@ -15,16 +15,4 @@ export const useLocalStore = <T extends ILocalStore>(creator: () => T): T => {
   }, []);
 
   return container.current;
-
-  // const storeRef = React.useRef<null | T>(null);
-  // let store = storeRef.current;
-  // if (store === null) {
-  //   store = creator();
-  // }
-
-  // React.useEffect(() => {
-  //   return () => store.destroy();
-  // }, [store]);
-
-  // return store;
 };

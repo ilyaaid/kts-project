@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 class Logger {
   log(...args: unknown[]) {
     console.log(...args);
@@ -5,6 +6,10 @@ class Logger {
 
   error(...args: unknown[]) {
     console.error(...args);
+  }
+
+  warning(...args: unknown[]) {
+    console.warn(...args);
   }
 }
 

@@ -6,11 +6,16 @@
     margin-bottom: 35px;
   }
 
+  &__loader {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
   &__items {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 80px;
-    margin-bottom: 70px;
   }
 
   &__item {
@@ -20,5 +25,6 @@
   &__paginator {
     display: flex;
     justify-content: center;
+    margin-top: 70px;
   }
 }

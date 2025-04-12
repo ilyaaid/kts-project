@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { action, computed, IReactionDisposer, makeObservable, observable, reaction, runInAction } from 'mobx';
+import { action, computed, makeObservable, observable, runInAction } from 'mobx';
 import { API_TOKEN, STRAPI_URL } from 'config/api';
 import rootStore from 'store/RootStore';
 import { normalizeProductCategory, ProductCategoryApi, ProductCategoryModel } from 'store/models/Product';
@@ -11,8 +11,9 @@ import {
 } from 'store/models/shared/collection';
 import logger from 'utils/logger';
 import { ILocalStore } from 'utils/useLocalStore';
+import { QueryParamNames } from './types';
 
-type PrivateFields = '_allCategories' | '_selCategoryKeys' | '_selTitle' | '_getAllCategories' | '_getUrlInitialData';
+type PrivateFields = '_allCategories' | '_selCategoryKeys' | '_selTitle' | '_getAllCategories';
 
 export default class ProductsFiltersStore implements ILocalStore {
   private _allCategories: CollectionModel<string, ProductCategoryModel> = getInitialCollectionModel();
@@ -32,12 +33,19 @@ export default class ProductsFiltersStore implements ILocalStore {
       selCategoryKeys: computed,
 
       setSelCategoryKeys: action,
-      _getAllCategories: action,
       setSelTitle: action,
-      _getUrlInitialData: action,
-      initialData: action,
-      submitForm: action,
+      _getAllCategories: action,
+
+      updateTitleParam: action,
+      updateCategoriesParam: action,
+      destroy: action,
     });
+
+    this.init();
+  }
+
+  async init() {
+    this._getAllCategories();
   }
 
   get allCategories() {
@@ -59,35 +67,63 @@ export default class ProductsFiltersStore implements ILocalStore {
 
   setSelCategoryKeys(val: string[]) {
     this._selCategoryKeys = val;
-    rootStore.query.setParam('categories', val);
+    this.updateCategoriesParam();
   }
 
   setSelTitle(val: string) {
-    this._selTitle = val.trim();
+    this._selTitle = val;
+  }
+
+  getAllParams() {
+    this._selTitle = this._getTitleParam();
+    this._selCategoryKeys = this._getCategoriesParam();
+  }
+
+  private _getTitleParam(): string {
+    const title = (rootStore.query.getParam(QueryParamNames.TITLE) as string) ?? '';
+    if (title === this._selTitle) {
+      return this._selTitle;
+    }
+    return title;
+  }
+
+  private _getCategoriesParam(): string[] {
+    const categoies = (rootStore.query.getParam(QueryParamNames.CATEGORIES) as string[]) ?? [];
+    if (
+      categoies.length === this._selCategoryKeys.length &&
+      categoies.every((val, ind) => this._selCategoryKeys[ind] === val)
+    ) {
+      return this._selCategoryKeys;
+    }
+    return categoies;
+  }
+
+  updateTitleParam() {
+    const prevTitle = this._getTitleParam();
+    if (Object.is(prevTitle, this._selTitle)) {
+      return;
+    }
+    if (this._selTitle === '') {
+      rootStore.query.removeParam(QueryParamNames.TITLE);
+    } else {
+      rootStore.query.setParam(QueryParamNames.TITLE, this._selTitle);
+    }
+  }
+
+  updateCategoriesParam() {
+    const prevCategories = this._getCategoriesParam();
+    if (Object.is(prevCategories, this._selCategoryKeys)) {
+      return;
+    }
+    if (this._selCategoryKeys.length === 0) {
+      rootStore.query.removeParam(QueryParamNames.CATEGORIES);
+    } else {
+      rootStore.query.setParam(QueryParamNames.CATEGORIES, this._selCategoryKeys);
+    }
   }
 
   submitForm() {
-    rootStore.query.setParam('title', this._selTitle);
-  }
-
-  async initialData() {
-    await this._getAllCategories();
-    this._getUrlInitialData();
-  }
-
-  private _getUrlInitialData() {
-    const title = rootStore.query.getParam('title');
-    const categories = rootStore.query.getParam('categories');
-    if (title) {
-      this._selTitle = title as string;
-    } else {
-      rootStore.query.setParam('title', this._selTitle);
-    }
-    if (categories) {
-      this._selCategoryKeys = categories as string[];
-    } else {
-      rootStore.query.setParam('categories', this._selCategoryKeys);
-    }
+    this.updateTitleParam();
   }
 
   private async _getAllCategories() {
@@ -114,29 +150,5 @@ export default class ProductsFiltersStore implements ILocalStore {
     this._allCategories = getInitialCollectionModel();
     this._selTitle = '';
     this._selCategoryKeys = [];
-    this._urlTitleReaction();
-    this._urlCategoriesReaction();
   }
-
-  private readonly _urlTitleReaction: IReactionDisposer = reaction(
-    () => rootStore.query.getParam('title'),
-    (newTitle) => {
-      if (newTitle) {
-        this._selTitle = newTitle as string;
-      } else {
-        this._selTitle = '';
-      }
-    },
-  );
-
-  private readonly _urlCategoriesReaction: IReactionDisposer = reaction(
-    () => rootStore.query.getParam('categories'),
-    (newCategories) => {
-      if (newCategories) {
-        this._selCategoryKeys = newCategories as string[];
-      } else {
-        this._selCategoryKeys = [];
-      }
-    },
-  );
 }

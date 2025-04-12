@@ -1,71 +1,92 @@
-import { action, computed, IReactionDisposer, makeObservable, observable, reaction } from 'mobx';
+import * as _ from 'lodash';
+import { action, computed, makeObservable, observable } from 'mobx';
 import * as qs from 'qs';
 import rootStore from 'store/RootStore';
-import { MetaModel } from 'store/models/Meta';
+import { QueryParamType } from 'store/RootStore/QueryParamsStore';
 import { ILocalStore } from 'utils/useLocalStore';
+import { ParamsType, QPSchema, QPType, QueryParamNames } from './types';
 
-type PrivateFields = '_meta';
+type PrivateFields = '_params';
 
 export default class PaginatorStore implements ILocalStore {
-  private _meta: MetaModel;
+  private _params: ParamsType;
+  private _initialParams: ParamsType;
 
-  constructor(initialMeta: MetaModel) {
-    this._meta = initialMeta;
+  constructor(initialParams: ParamsType) {
+    this._params = _.cloneDeep(initialParams);
+    this._initialParams = _.cloneDeep(initialParams);
 
     makeObservable<PaginatorStore, PrivateFields>(this, {
-      _meta: observable,
-      meta: computed,
-      setMeta: action,
+      _params: observable,
+      params: computed,
+
       getPage: action,
+      setParams: action,
+      destroy: action,
     });
   }
 
-  get meta() {
-    return this._meta;
+  get params() {
+    return this._params;
   }
 
-  setMeta(val: MetaModel) {
-    this._meta = val;
-    if (this._meta.pagination.page > this._meta.pagination.pageCount) {
-      this._meta.pagination.page = this._meta.pagination.pageCount;
-      this.getPage(this.meta.pagination.page);
+  setParams(params: ParamsType) {
+    this._params = params;
+    if (this._params.page > this._params.pageCount) {
+      this.getPage(this._params.pageCount);
+    }
+  }
+
+  getAllParams() {
+    this._params = this._getParamsQueryParam();
+  }
+
+  private _getParamsQueryParam(): ParamsType {
+    const normalizeParams = (from: QueryParamType): ParamsType => {
+      const strFrom = (from as string) ?? '';
+      const parsed = qs.parse(strFrom) ?? {};
+      const res = QPSchema.safeParse(parsed);
+      if (!res.success) {
+        return this._params;
+      }
+      const to: ParamsType = {
+        ...this._params,
+        page: res.data.page,
+      };
+      return to;
+    };
+
+    const prevParams = normalizeParams(rootStore.query.getParam(QueryParamNames.PAGINATE));
+    if (_.isEqual(prevParams, this._params)) {
+      return this._params;
+    }
+    return prevParams;
+  }
+
+  updateParamsQueryParam() {
+    const prevParams = this._getParamsQueryParam();
+    if (Object.is(prevParams, this._params)) {
+      return;
+    }
+    if (this._params.page <= 1) {
+      rootStore.query.removeParam(QueryParamNames.PAGINATE);
+    } else {
+      const newParams: QPType = {
+        page: this._params.page,
+      };
+      rootStore.query.setParam(QueryParamNames.PAGINATE, qs.stringify(newParams));
     }
   }
 
   getPage(page: number) {
-    this._meta.pagination.page = page;
-    rootStore.query.setParam(
-      'pagination',
-      qs.stringify({
-        page: this._meta.pagination.page,
-        pageSize: this._meta.pagination.pageSize,
-      }),
-    );
-  }
-
-  _getUrlInitialData() {}
-  initialData() {
-    this._getUrlInitialData();
+    const prevPage = this._params.page;
+    this._params.page = page;
+    if (prevPage !== page) {
+      this.updateParamsQueryParam();
+    }
   }
 
   destroy() {
-    this._urlCategoriesReaction();
+    this._params = _.cloneDeep(this._initialParams);
   }
-
-  private readonly _urlCategoriesReaction: IReactionDisposer = reaction(
-    () => rootStore.query.getParam('pagination'),
-    (newPagination) => {
-      if (newPagination) {
-        const parsed = qs.parse(newPagination as string) as qs.ParsedQs;
-        this._meta = {
-          pagination: {
-            page: +(parsed.page as string),
-            pageSize: +(parsed.pageSize as string),
-            pageCount: this._meta.pagination.pageCount,
-            total: this._meta.pagination.total,
-          },
-        };
-      }
-    },
-  );
 }

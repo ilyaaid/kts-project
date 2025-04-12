@@ -1,21 +1,19 @@
-import { action, makeObservable, observable } from 'mobx';
+import { action, computed, makeObservable, observable } from 'mobx';
 import * as qs from 'qs';
+import logger from 'utils/logger';
+import { ValueOf } from 'utils/types';
 
 type PrivateFields = '_params';
 
-type ValueOf<T> = T[keyof T];
-
-export default class QueryParamsStore {
+export class QueryParamsStore {
   private _params: qs.ParsedQs = {};
-  private _search: string = '';
-
-  private _changeQueryParamsUrl: null | ((params: string) => void) = null;
+  private _setSearchParams: ((p: string) => void) | null = null;
 
   constructor() {
     makeObservable<QueryParamsStore, PrivateFields>(this, {
       _params: observable.ref,
       setSearch: action,
-      setParam: action,
+      params: computed,
     });
   }
 
@@ -23,31 +21,45 @@ export default class QueryParamsStore {
     return this._params;
   }
 
-  setChangeUrlFunc(changeQueryParamsUrl: (params: string) => void) {
-    this._changeQueryParamsUrl = changeQueryParamsUrl;
+  setChangeUrlParamFunc(f: (p: string) => void) {
+    this._setSearchParams = f;
   }
 
-  changeUrl() {
-    if (this._changeQueryParamsUrl) {
-      this._changeQueryParamsUrl(qs.stringify(this._params));
+  private _changeUrl(params: string) {
+    if (this._setSearchParams) {
+      this._setSearchParams(params);
     }
-  }
-
-  setParam(param: string, value: ValueOf<qs.ParsedQs>) {
-    this._params[param] = value;
-    this._params = JSON.parse(JSON.stringify(this._params));
-    this.changeUrl();
   }
 
   getParam(key: string): ValueOf<qs.ParsedQs> {
     return this._params[key];
   }
 
-  setSearch(searchStr: string) {
-    const parsed = qs.parse(searchStr.startsWith('?') ? searchStr.slice(1) : searchStr);
-    if (this._search !== searchStr) {
-      this._params = parsed;
-      this._search = searchStr;
+  setParam(key: string, value: ValueOf<qs.ParsedQs>) {
+    if (Object.is(this._params[key], value)) {
+      logger.warning(`setting ${key} in query params with the same value`);
+      return;
     }
+
+    const newParams = qs.parse(qs.stringify(this._params));
+    newParams[key] = value;
+    this._changeUrl(qs.stringify(newParams));
+  }
+
+  removeParam(key: string): void {
+    if (!(key in this._params)) {
+      logger.warning(`the key ${key} cannot be deleted: it is not in query params`);
+      return;
+    }
+
+    const newParams = qs.parse(qs.stringify(this._params));
+    delete newParams[key];
+    this._changeUrl(qs.stringify(newParams));
+  }
+
+  setSearch(searchStr: string): void {
+    const str = searchStr.startsWith('?') ? searchStr.slice(1) : searchStr;
+    const parsed = qs.parse(str);
+    this._params = parsed;
   }
 }

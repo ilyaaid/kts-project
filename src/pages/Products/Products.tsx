@@ -1,5 +1,5 @@
 import { observer } from 'mobx-react-lite';
-import React from 'react';
+import React, { createContext, useContext } from 'react';
 import Text from 'components/Text';
 import ProductsStore from 'store/ProductsStore';
 import { useLocalStore } from 'utils/useLocalStore';
@@ -7,11 +7,13 @@ import ProductsList from './components/ProductsList';
 import ProductsSearch from './components/ProductsSearch';
 import styles from './Procuts.module.scss';
 
+const ProductsContext = createContext<ProductsStore | null>(null);
+const ProductsProvider = ProductsContext.Provider;
+
+export const useProductsContext = () => useContext(ProductsContext);
+
 const Products: React.FC = () => {
   const productsStore = useLocalStore<ProductsStore>(() => new ProductsStore());
-  React.useEffect(() => {
-    productsStore.initialData();
-  }, [productsStore]);
 
   return (
     <div className="container">
@@ -25,8 +27,10 @@ const Products: React.FC = () => {
             the name of the item
           </Text>
         </section>
-        <ProductsSearch productsStore={productsStore}></ProductsSearch>
-        <ProductsList productsStore={productsStore}></ProductsList>
+        <ProductsProvider value={productsStore}>
+          <ProductsSearch></ProductsSearch>
+          <ProductsList></ProductsList>
+        </ProductsProvider>
       </div>
     </div>
   );
