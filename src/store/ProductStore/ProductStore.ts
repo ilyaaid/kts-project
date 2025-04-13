@@ -1,7 +1,7 @@
-import axios from 'axios';
 import { action, computed, makeObservable, observable, runInAction } from 'mobx';
 import * as qs from 'qs';
-import { API_TOKEN, STRAPI_URL } from 'config/api';
+import { ENDPOINTS } from 'api/endpoint';
+import { fetchData } from 'api/fetch';
 import { normalizeProduct, ProductModel } from 'store/models/Product';
 import logger from 'utils/logger';
 import { ILocalStore } from 'utils/useLocalStore';
@@ -23,28 +23,24 @@ export default class ProductStore implements ILocalStore {
     return this._product;
   }
 
-  getProduct(id: string) {
+  async getProduct(id: string) {
     const queryStr = qs.stringify({
       populate: ['images', 'productCategory'],
     });
-    const fetch = async () => {
-      const resp = await axios.get(`${STRAPI_URL}/products/${id}?${queryStr}`, {
-        headers: {
-          Authorization: `Bearer ${API_TOKEN}`,
-        },
+
+    const { data, success } = await fetchData({ pathname: ENDPOINTS.product(id), qparams: queryStr });
+    if (!success) {
+      logger.error('getProduct: ', data.cause);
+      return;
+    }
+    try {
+      const normData = normalizeProduct(data.data);
+      runInAction(() => {
+        this._product = normData;
       });
-
-      try {
-        const respNorm = normalizeProduct(resp.data.data);
-        runInAction(() => {
-          this._product = respNorm;
-        });
-      } catch (err) {
-        logger.error(err);
-      }
-    };
-
-    fetch();
+    } catch (err) {
+      logger.error(err);
+    }
   }
 
   destroy() {

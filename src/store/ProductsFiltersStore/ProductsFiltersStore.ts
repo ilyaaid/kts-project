@@ -1,6 +1,6 @@
-import axios from 'axios';
 import { action, computed, makeObservable, observable, runInAction } from 'mobx';
-import { API_TOKEN, STRAPI_URL } from 'config/api';
+import { ENDPOINTS } from 'api/endpoint';
+import { fetchData } from 'api/fetch';
 import rootStore from 'store/RootStore';
 import { normalizeProductCategory, ProductCategoryApi, ProductCategoryModel } from 'store/models/Product';
 import {
@@ -127,19 +127,20 @@ export default class ProductsFiltersStore implements ILocalStore {
   }
 
   private async _getAllCategories() {
-    const resp = await axios.get(`${STRAPI_URL}/product-categories`, {
-      headers: {
-        Authorization: `Bearer ${API_TOKEN}`,
-      },
+    const { data, success } = await fetchData({
+      pathname: ENDPOINTS.categories(),
     });
-
+    if (!success) {
+      logger.error('getAllCategories:', data.cause);
+      return;
+    }
     try {
-      const data = normalizeCollection(
-        resp.data.data.map((cat: ProductCategoryApi) => normalizeProductCategory(cat)),
+      const normData = normalizeCollection(
+        data.data.map((cat: ProductCategoryApi) => normalizeProductCategory(cat)),
         (el: ProductCategoryModel) => el.documentId,
       );
       runInAction(() => {
-        this._allCategories = data;
+        this._allCategories = normData;
       });
     } catch (err) {
       logger.error(err);

@@ -12,6 +12,10 @@ import styles from './ProductsList.module.scss';
 const ProductsList: React.FC = () => {
   const productsStore = useProductsContext()!;
 
+  React.useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [productsStore]);
+
   const listRef = useRef<HTMLDivElement>(null);
   return (
     <section ref={listRef} className={styles.list}>

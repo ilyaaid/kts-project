@@ -1,7 +1,7 @@
-import axios from 'axios';
 import { action, computed, IReactionDisposer, makeObservable, observable, reaction, runInAction } from 'mobx';
 import * as qs from 'qs';
-import { STRAPI_URL, API_TOKEN } from 'config/api';
+import { ENDPOINTS } from 'api/endpoint';
+import { fetchData } from 'api/fetch';
 import Paginator from 'store/PaginatorStore';
 import ProductsFiltersStore from 'store/ProductsFiltersStore';
 import rootStore from 'store/RootStore';
@@ -86,17 +86,21 @@ export default class ProductsStore implements ILocalStore {
 
     this._setIsLoading(true);
     const queryStr = qs.stringify(qOptions);
-    const resp = await axios.get(`${STRAPI_URL}/products?${queryStr}`, {
-      headers: {
-        Authorization: `Bearer ${API_TOKEN}`,
-      },
+
+    const { data, success } = await fetchData({
+      pathname: ENDPOINTS.products(),
+      qparams: queryStr,
     });
+    if (!success) {
+      logger.error('getProducts: ', data.cause);
+      return;
+    }
     try {
-      const data = normalizeCollection(
-        resp.data.data.map((item: ProductApi) => normalizeProduct(item)),
+      const normData = normalizeCollection(
+        data.data.map((item: ProductApi) => normalizeProduct(item)),
         (el: ProductModel) => el.documentId,
       );
-      const meta = normalizeMeta(resp.data.meta);
+      const meta = normalizeMeta(data.meta);
       this.paginator.setParams({
         page: meta.pagination.page,
         pageSize: meta.pagination.pageSize,
@@ -104,7 +108,7 @@ export default class ProductsStore implements ILocalStore {
         total: meta.pagination.total,
       });
       runInAction(() => {
-        this._products = data;
+        this._products = normData;
       });
       this._setIsLoading(false);
     } catch (err) {
