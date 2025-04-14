@@ -1,7 +1,4 @@
-@font-face {
-  font-family: "Roboto";
-  src: url("fonts/Roboto/Roboto-VariableFont_wdth,wght.ttf");
-}
+@import url("fonts/Roboto/index.scss");
 
 * {
   box-sizing: border-box;

@@ -44,6 +44,6 @@ export default class ProductStore implements ILocalStore {
   }
 
   destroy() {
-    logger.log('ProductStore is destroyed');
+    this._product = null;
   }
 }

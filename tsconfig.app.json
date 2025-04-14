@@ -29,7 +29,6 @@
       "components": ["components/*"],
       "config": ["config/*"],
       "styles": ["styles/*"],
-      "fonts": ["fonts/*"],
       "utils": ["utils/*"]
     }
   },

@@ -1,4 +1,3 @@
-import React from 'react';
 import { Link } from 'react-router';
 import BagIcon from 'components/icons/BagIcon';
 import ProfileIcon from 'components/icons/ProfileIcon';

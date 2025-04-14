@@ -1,4 +1,3 @@
-import React from 'react';
 import { Navigate, RouteObject } from 'react-router';
 import App from 'App/';
 import Product from 'pages/Product';
