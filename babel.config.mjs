@@ -1,6 +1,8 @@
-
 export default function (api) {
   api.cache(true);
+
+  const isProd = process.env.NODE_ENV === 'production';
+
   return {
     presets: [
       '@babel/preset-env',
@@ -12,6 +14,6 @@ export default function (api) {
       ],
       '@babel/preset-typescript',
     ],
-    plugins: [],
+    plugins: [!isProd && 'react-refresh/babel'].filter(Boolean),
   };
-};
+}

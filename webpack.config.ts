@@ -1,4 +1,5 @@
 import path from 'path';
+import ReactRefreshWebpackPlugin from '@pmmmwh/react-refresh-webpack-plugin';
 import CopyWebpackPlugin from 'copy-webpack-plugin';
 import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
@@ -17,10 +18,8 @@ const Modes = {
 };
 
 const OPTIONS = {
-  mode: Modes.DEV,
   analyzeModules: false,
-}
-
+};
 
 const parseTsConfigPaths = (paths: Record<string, string[]>): Record<string, string> => {
   const webpackConfigAliases: Record<string, string> = {};
@@ -33,7 +32,7 @@ const parseTsConfigPaths = (paths: Record<string, string[]>): Record<string, str
   return webpackConfigAliases;
 };
 
-const isProd = OPTIONS.mode === Modes.PROD;
+const isProd = process.env.NODE_ENV === Modes.PROD;
 
 const getLoadersForStyles = (withModules = false): RuleSetUse => {
   return [
@@ -64,6 +63,7 @@ const getLoadersForStyles = (withModules = false): RuleSetUse => {
 
 const config: webpack.Configuration = {
   mode: isProd ? 'production' : 'development',
+  target: 'web',
   devtool: isProd ? 'source-map' : 'eval-source-map',
   entry: {
     main: {
@@ -105,8 +105,10 @@ const config: webpack.Configuration = {
         },
       ],
     }),
-    OPTIONS.analyzeModules ? new BundleAnalyzerPlugin() : false,
-  ],
+    !isProd && new ReactRefreshWebpackPlugin(),
+    !isProd && new webpack.HotModuleReplacementPlugin(),
+    OPTIONS.analyzeModules && new BundleAnalyzerPlugin(),
+  ].filter(Boolean),
   module: {
     rules: [
       {
