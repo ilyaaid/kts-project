@@ -1,0 +1,30 @@
+.header {
+  width: 100%;
+  background-color: #ffffff;
+  border: 2px solid #f3f3f3;
+
+  &__inner {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+  }
+
+  &__logo {
+    padding: 24px 0px;
+    display: flex;
+    align-items: center;
+  }
+
+  &__nav {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 48px;
+  }
+
+  &__icons {
+    display: flex;
+    align-items: center;
+    justify-content: right;
+    gap: 24px;
+  }
+}

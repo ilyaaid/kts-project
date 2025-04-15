@@ -1,0 +1,23 @@
+@use "styles/variables.scss" as *;
+
+.link {
+  display: flex;
+  align-items: center;
+  color: $text-primary;
+  text-decoration: none;
+  height: 100%;
+  padding: 0 3px;
+
+  &:hover {
+    color: $text-accent;
+  }
+
+  &_active {
+    border-bottom: 2px solid $brand;
+    margin-bottom: -2px;
+  }
+
+  &_active > &__text {
+    font-weight: 600;
+  }
+}

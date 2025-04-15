@@ -1,0 +1,29 @@
+@use "styles/variables.scss" as *;
+
+.fill {
+  &_primary {
+    fill: $color-primary;
+  }
+
+  &_secondary {
+    fill: $color-secondary;
+  }
+
+  &_accent {
+    fill: $color-accent;
+  }
+}
+
+.stroke {
+  &_primary > path {
+    stroke: $color-primary;
+  }
+
+  &_secondary > path {
+    stroke: $color-secondary;
+  }
+
+  &_accent > path {
+    stroke: $color-accent;
+  }
+}
