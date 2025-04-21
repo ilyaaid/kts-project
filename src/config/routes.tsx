@@ -1,5 +1,6 @@
 import { Navigate, RouteObject } from 'react-router';
 import App from 'App/';
+import Cart from 'pages/Cart';
 import Product from 'pages/Product';
 import Products from 'pages/Products';
 
@@ -57,7 +58,7 @@ export const routesConfig: RouteObject[] = [
       },
       {
         path: routes.cart.mask,
-        element: <div>cart!</div>,
+        element: <Cart />,
       },
       {
         path: routes.profile.mask,

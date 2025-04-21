@@ -1,3 +1,4 @@
+import fixedPrecision from 'utils/fixedPrecision';
 import { ImageApi, ImageModel, normalizeImage } from './Image';
 
 export type ProductApi = {
@@ -8,6 +9,7 @@ export type ProductApi = {
   price: number;
   isInStock: boolean;
   images: ImageApi[];
+  discountPercent: number;
 };
 
 export type ProductModel = {
@@ -18,9 +20,14 @@ export type ProductModel = {
   price: number;
   isInStock: boolean;
   images: ImageModel[];
+  discountPercent: number;
+  quantity: number;
+  priceDiscount: number;
+  discountNum: number;
 };
 
 export const normalizeProduct = (from: ProductApi): ProductModel => {
+  const priceDiscount = from.price - fixedPrecision(0.01 * from.discountPercent * from.price, 2);
   return {
     id: from.id,
     documentId: from.documentId,
@@ -29,5 +36,9 @@ export const normalizeProduct = (from: ProductApi): ProductModel => {
     price: from.price,
     isInStock: from.isInStock,
     images: from.images.map((img) => normalizeImage(img)),
+    discountPercent: from.discountPercent,
+    priceDiscount: priceDiscount,
+    discountNum: from.price - priceDiscount,
+    quantity: from.isInStock ? Math.round(from.id / 50) : 0,
   };
 };

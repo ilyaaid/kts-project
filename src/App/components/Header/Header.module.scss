@@ -1,30 +1,39 @@
-.header {
-  width: 100%;
-  background-color: #ffffff;
-  border: 2px solid #f3f3f3;
+@use "styles/mixins.scss" as *;
 
-  &__inner {
-    display: grid;
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background-color: #ffffff;
+}
+
+.up {
+  border: 2px solid #f3f3f3;
+}
+
+.down {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  background-color: inherit;
+  position: absolute;
+  z-index: 100;
+  padding: 12px;
+}
+
+.inner {
+  display: grid;
+  @include respond-to(mobile) {
+    grid-template-columns: 1fr auto;
+  }
+
+  @include respond-to(tablet) {
     grid-template-columns: 1fr auto 1fr;
   }
+}
 
-  &__logo {
-    padding: 24px 0px;
-    display: flex;
-    align-items: center;
-  }
-
-  &__nav {
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 48px;
-  }
-
-  &__icons {
-    display: flex;
-    align-items: center;
-    justify-content: right;
-    gap: 24px;
-  }
+.logo {
+  padding: 12px 0px;
+  display: flex;
+  align-items: center;
 }

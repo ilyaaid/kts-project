@@ -1,3 +1,5 @@
+@use "styles/mixins.scss" as *;
+
 .paginator {
   display: flex;
   align-items: center;
@@ -6,6 +8,14 @@
     padding: 0;
     background-color: transparent;
     cursor: pointer;
+
+    @include respond-to(mobile) {
+      display: none;
+    }
+
+    @include respond-to(tablet) { 
+      display: block;
+    }
 
     &_left {
       transform: rotate(180deg);
@@ -20,10 +30,9 @@
     padding: 10px 15px;
     cursor: pointer;
 
-
     &_active {
-        color: #FFFFFF;
-        background-color: #518581;
+      color: #ffffff;
+      background-color: #518581;
     }
   }
 }

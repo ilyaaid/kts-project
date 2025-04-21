@@ -22,26 +22,28 @@ export default class ProductsFiltersStore implements ILocalStore {
   private _selCategoryKeys: string[] = [];
 
   constructor() {
+    this.init();
+
     makeObservable<ProductsFiltersStore, PrivateFields>(this, {
       _allCategories: observable.ref,
-      _selCategoryKeys: observable.ref,
       _selTitle: observable,
+      _selCategoryKeys: observable.ref,
 
       allCategories: computed,
       selCategories: computed,
       selTitle: computed,
       selCategoryKeys: computed,
 
+      init: action,
       setSelCategoryKeys: action,
       setSelTitle: action,
       _getAllCategories: action,
+      getAllParams: action,
 
       updateTitleParam: action,
       updateCategoriesParam: action,
       destroy: action,
     });
-
-    this.init();
   }
 
   async init() {

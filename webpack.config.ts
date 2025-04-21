@@ -72,13 +72,15 @@ const config: webpack.Configuration = {
   },
   output: {
     path: path.join(ROOT_PATH, 'dist'),
-    filename: '[name]_[contenthash].js',
+    filename: !isProd ? '[name].js' : '[name]_[contenthash].js',
     clean: true,
+    publicPath: '',
   },
 
   devServer: {
     port: 4000,
     hot: true,
+    historyApiFallback: true,
   },
 
   resolve: {
@@ -90,7 +92,7 @@ const config: webpack.Configuration = {
       template: path.join(ROOT_PATH, 'index.html'),
     }),
     new MiniCssExtractPlugin({
-      filename: '[name]_[contenthash].css',
+      filename: !isProd ? '[name].css' : '[name]_[contenthash].css',
     }),
     new ForkTsCheckerWebpackPlugin({
       typescript: {

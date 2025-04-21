@@ -2,18 +2,12 @@
 
 .wrapper {
   display: flex;
-  align-items: stretch;
   justify-content: space-between;
-  gap: 8px;
-  padding-right: 12px;
-  // padding: 16px 12px;
+  align-items: center;
+
   border: 1px solid $input-border;
   color: $input-text;
   background-color: $input-bg;
-
-  &_slot {
-    // padding: 13px 12px;
-  }
 
   &:focus-within {
     border: 1px solid $input-border-focus;
@@ -29,12 +23,10 @@
 }
 
 .elem {
-  height: 52px;
+  flex-grow: 1;
   border: none;
   outline: none;
-  padding: 0px 0px 0px 12px;
-  width: 100%;
-  flex-grow: 1;
+  padding: 1em 12px;
 
   &::placeholder {
     color: $input-placeholder;
@@ -47,8 +39,7 @@
 }
 
 .after {
-  align-self: center;
-
+  padding: 0px 12px;
   & > svg {
     display: block;
   }

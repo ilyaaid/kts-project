@@ -118,12 +118,15 @@ export default class ProductsStore implements ILocalStore {
 
   destroy() {
     this.filters.destroy();
+    this.paginator.destroy();
     this._products = getInitialCollectionModel();
     this._urlReaction();
   }
 
   private readonly _urlReaction: IReactionDisposer = reaction(
-    () => rootStore.query.params,
+    () => {
+      return rootStore.query.params;
+    },
     () => {
       this.filters.getAllParams();
       this.paginator.getAllParams();

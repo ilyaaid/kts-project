@@ -6,12 +6,21 @@ import styles from './CircleArrow.module.scss';
 type CircleArrowRightProps = {
   className?: string;
   disabled?: boolean;
+  onClick: (type: 'left' | 'right') => void;
+  type: 'left' | 'right';
 };
 
-const CircleArrow: React.FC<CircleArrowRightProps> = ({ className, disabled, ...others }) => {
+const CircleArrow: React.FC<CircleArrowRightProps> = ({ className, disabled, onClick, type, ...others }) => {
   const classes = classNames(className, styles.circle);
   return (
-    <button {...others} className={classes} disabled={disabled}>
+    <button
+      {...others}
+      className={classes}
+      onClick={() => {
+        onClick(type);
+      }}
+      disabled={disabled}
+    >
       <ArrowRightIcon className={styles.circle__arrow}></ArrowRightIcon>
     </button>
   );

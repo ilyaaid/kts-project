@@ -16,6 +16,7 @@ export default class ProductStore implements ILocalStore {
       _product: observable,
       product: computed,
       getProduct: action,
+      destroy: action,
     });
   }
 
@@ -25,7 +26,7 @@ export default class ProductStore implements ILocalStore {
 
   async getProduct(id: string) {
     const queryStr = qs.stringify({
-      populate: ['images', 'productCategory'],
+      populate: ['images', 'productCategory', 'images.related'],
     });
 
     const { data, success } = await fetchData({ pathname: ENDPOINTS.product(id), qparams: queryStr });

@@ -24,66 +24,6 @@
   }
 }
 
-.inner {
-  padding-top: 60px;
-  padding-bottom: 100px;
-}
-
-.content {
-  display: flex;
-  justify-content: flex-start;
-  gap: 48px;
-}
-
-.image {
-  position: relative;
-  &__el {
-    display: block;
-    width: 600px;
-    height: 600px;
-    object-fit: cover;
-    object-position: center;
-  }
-
-  &__left {
-    left: 24px;
-    top: 50%;
-    transform: translate(0, -50%) rotate(180deg);
-  }
-
-  &__right {
-    right: 24px;
-    top: 50%;
-    transform: translate(0, -50%);
-  }
-}
-
-.desc {
-  &__title {
-    margin-bottom: 24px;
-  }
-  &__text {
-    margin-bottom: 48px;
-  }
-}
-
-.actions {
-  padding-top: 32px;
-
-  &__price {
-    margin-bottom: 48px;
-  }
-
-  &__btns {
-    display: flex;
-    gap: 48px;
-
-    &__item {
-      padding: 17px 32px;
-    }
-  }
-}
-
 .related {
   padding-top: 48px;
   &__title {

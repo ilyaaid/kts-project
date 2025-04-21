@@ -7,7 +7,7 @@ import { useProductsContext } from 'pages/Products';
 import { ProductCategoryModel } from 'store/models/Product';
 import styles from './ProductsSearch.module.scss';
 
-function categoriesToOptions(categories: ProductCategoryModel[]) {
+function categoriesToOptions(categories: ProductCategoryModel[]): Option[] {
   return categories.map((cat) => ({ key: cat.documentId, value: cat.title }));
 }
 

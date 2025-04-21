@@ -1,3 +1,5 @@
+@use "styles/mixins.scss" as *;
+
 .search {
   margin-bottom: 48px;
 
@@ -12,6 +14,16 @@
   }
 
   &__filter {
-    width: 300px;
+    @include respond-to(mobile) {
+      width: 100%;
+    }
+
+    @include respond-to(tablet) {
+      width: 50%;
+    }
+
+    @include respond-to(desktop) {
+      width: 25%;
+    }
   }
 }

@@ -6,7 +6,7 @@ import ArrowDownIcon from 'components/icons/ArrowDownIcon';
 import styles from './MultiDropdownInput.module.scss';
 
 const MultiDropDownInput: React.FC<MultiDropDownPropsOptions> = (props) => {
-  const { options, setOptionsVal, value, getTitle, disabled } = props;
+  const { options, setOptionsVal, value, getTitle, open, setOpen, disabled } = props;
   const [focus, setFocus] = useState<boolean>(false);
   const [inputStr, setInputStr] = useState<string>('');
   const classes = classNames(styles['dropdown__input']);
@@ -16,6 +16,7 @@ const MultiDropDownInput: React.FC<MultiDropDownPropsOptions> = (props) => {
   const handleFocus = () => {
     setFocus(true);
     setOptionsVal(options);
+    setOpen(true);
   };
 
   const handleBlur = () => {
@@ -31,6 +32,10 @@ const MultiDropDownInput: React.FC<MultiDropDownPropsOptions> = (props) => {
     }
   };
 
+  const classesArrow = classNames(styles.arrow, {
+    [styles.arrow_up]: open,
+  });
+
   return (
     <Input
       ref={ref}
@@ -38,7 +43,15 @@ const MultiDropDownInput: React.FC<MultiDropDownPropsOptions> = (props) => {
       value={!focus && value.length !== 0 ? getTitle(value) : inputStr}
       disabled={disabled}
       placeholder={getTitle(value)}
-      afterSlot={<ArrowDownIcon color="secondary" />}
+      afterSlot={
+        <ArrowDownIcon
+          onClick={() => {
+            setOpen(!open);
+          }}
+          className={classesArrow}
+          color="secondary"
+        />
+      }
       onChange={handleChange}
       onFocus={handleFocus}
       onBlur={handleBlur}

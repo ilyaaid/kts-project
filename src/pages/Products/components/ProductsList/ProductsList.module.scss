@@ -1,3 +1,5 @@
+@use 'styles/mixins.scss' as *;
+
 .list {
   &__title {
     display: flex;
@@ -14,12 +16,33 @@
 
   &__items {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 80px;
+
+    @include respond-to(mobile) {
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+
+    @include respond-to(tablet) {
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+    }
+
+    @include respond-to(desktop) {
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 80px;
+    }
   }
 
   &__item {
     text-decoration: none;
+
+    &__instock {
+      color: green;
+    }
+
+    &__outstock {
+      color: red;
+    }
   }
 
   &__paginator {

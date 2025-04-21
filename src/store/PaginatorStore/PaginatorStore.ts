@@ -23,6 +23,7 @@ export default class PaginatorStore implements ILocalStore {
       getPage: action,
       setParams: action,
       destroy: action,
+      getAllParams: action,
     });
   }
 

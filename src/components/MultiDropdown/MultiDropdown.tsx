@@ -29,6 +29,8 @@ export type MultiDropdownProps = {
 export type MultiDropDownPropsOptions = MultiDropdownProps & {
   optionsVal: Option[];
   setOptionsVal: (options: Option[]) => void;
+  open: boolean;
+  setOpen: (open: boolean) => void;
 };
 
 const MultiDropdown: React.FC<MultiDropdownProps> = (props) => {
@@ -37,10 +39,6 @@ const MultiDropdown: React.FC<MultiDropdownProps> = (props) => {
   const [optionsVal, setOptionsVal] = useState<Option[]>(options);
   // console.log(options, optionsVal);
   const ref = useRef<HTMLDivElement | null>(null);
-
-  const handleClick = () => {
-    setOpen(true);
-  };
 
   useEffect(() => {
     const handleOutClick = (e: MouseEvent) => {
@@ -60,9 +58,9 @@ const MultiDropdown: React.FC<MultiDropdownProps> = (props) => {
 
   const classes = classNames(className, styles['dropdown']);
   return (
-    <div ref={ref} className={classes} onClick={handleClick}>
-      <MultiDropDownInput {...{ ...props, optionsVal, setOptionsVal }}></MultiDropDownInput>
-      {!disabled && open && <MultiDropDownOptions {...{ ...props, optionsVal, setOptionsVal }}></MultiDropDownOptions>}
+    <div ref={ref} className={classes}>
+      <MultiDropDownInput {...{ ...props, optionsVal, setOptionsVal, open, setOpen }} />
+      {!disabled && open && <MultiDropDownOptions {...{ ...props, optionsVal, setOptionsVal, open, setOpen }} />}
     </div>
   );
 };

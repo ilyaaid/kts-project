@@ -5,6 +5,9 @@ export type ProductsMeta = {
 export type QOptions = {
   populate: string[];
   filters?: {
+    documentId?: {
+      $in: string[];
+    };
     title?: {
       $containsi: string;
     };
@@ -14,7 +17,7 @@ export type QOptions = {
       };
     };
   };
-  pagination: {
+  pagination?: {
     page: number;
     pageSize: number;
   };
