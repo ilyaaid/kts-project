@@ -1,0 +1,12 @@
+@use "styles/mixins.scss" as *;
+@import url("fonts/Roboto/index.scss");
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}

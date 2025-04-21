@@ -1,0 +1,23 @@
+.icons {
+  justify-self: stretch;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 24px;
+
+  &__link {
+    position: relative;
+
+    &__text {
+      position: absolute;
+      left: calc(50% + 2px);
+      top: -3px;
+      z-index: 10;
+
+      background-color: rgba(241, 17, 126, 1);
+      color: rgba(255, 255, 255, 1);
+      border-radius: 64px;
+      padding: 0px 4px;
+    }
+  }
+}
