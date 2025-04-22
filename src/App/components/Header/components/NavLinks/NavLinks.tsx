@@ -5,13 +5,13 @@ import Text from 'components/Text';
 import { routes } from 'config/routes';
 import styles from './NavLinks.module.scss';
 
-const NavLinks: React.FC<HTMLAttributes<HTMLDivElement>> = () => {
+const NavLinks: React.FC<HTMLAttributes<HTMLDivElement>> = ({ className }) => {
   const locaction = useLocation();
 
   const navLinksData = [
     { address: routes.main.create(), text: 'Products' },
-    { address: routes.categories.create(), text: 'Categories' },
-    // { address: routes.about.create(), text: 'About us' },
+    // { address: routes.categories.create(), text: 'Categories' },
+    { address: routes.about.create(), text: 'About us' },
   ];
 
   const links = navLinksData.map((data) => {
@@ -28,7 +28,7 @@ const NavLinks: React.FC<HTMLAttributes<HTMLDivElement>> = () => {
       </Link>
     );
   });
-  return <nav className={styles.nav}>{links}</nav>;
+  return <nav className={classNames(className, styles.nav)}>{links}</nav>;
 };
 
 export default NavLinks;

@@ -37,7 +37,6 @@ const MultiDropdown: React.FC<MultiDropdownProps> = (props) => {
   const { className, disabled, options } = props;
   const [open, setOpen] = useState(false);
   const [optionsVal, setOptionsVal] = useState<Option[]>(options);
-  // console.log(options, optionsVal);
   const ref = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {

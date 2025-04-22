@@ -2,50 +2,67 @@ import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { Link, useLocation } from 'react-router';
 import Logo from 'components/Logo';
+import Text from 'components/Text';
+import BagIcon from 'components/icons/BagIcon';
+import BurgerIcon from 'components/icons/BurgerIcon';
+import CrossIcon from 'components/icons/CrossIcon';
 import { routes } from 'config/routes';
-import HeaderStore from 'store/HeaderStore';
+import rootStore from 'store/RootStore';
 import { BREAKPOINTS, useMediaType } from 'utils/useMediaType';
-import Icons from './components/Icons';
+// import Icons from './components/Icons';
 import NavLinks from './components/NavLinks';
 import styles from './Header.module.scss';
 
-const headerContext = React.createContext<HeaderStore>(new HeaderStore());
-const HeaderProvider = headerContext.Provider;
-export const useHeaderContext = () => React.useContext(headerContext);
-
 const Header: React.FC = () => {
-  const headerStore = useHeaderContext();
+  const [menuOpen, setMenuOpen] = React.useState<boolean>(false);
+  const toggleMenuOpen = React.useCallback(() => {
+    setMenuOpen((prev) => !prev);
+  }, []);
   const isMobile = useMediaType() === BREAKPOINTS.mobile;
 
   const loc = useLocation();
   React.useEffect(() => {
-    headerStore.setOpen(false);
-  }, [headerStore, loc.pathname]);
+    setMenuOpen(false);
+  }, [loc.pathname]);
+
+  const cnt = rootStore.cart.getProductsCnt();
 
   return (
-    <HeaderProvider value={headerStore}>
-      <header className={`${styles.header}`}>
-        <div className={styles.up}>
-          <div className="container">
-            <div className={`${styles.inner}`}>
-              <div className={`${styles.logo}`}>
-                <Link to={routes.main.create()}>
-                  <Logo></Logo>
-                </Link>
-              </div>
-              {!isMobile && <NavLinks></NavLinks>}
-              <Icons forMobile={isMobile}></Icons>
+    <header className={`${styles.header}`}>
+      <div className={styles.up}>
+        <div className="container">
+          <div className={`${styles.inner}`}>
+            <div className={`${styles.logo}`}>
+              <Link to={routes.main.create()}>
+                <Logo></Logo>
+              </Link>
+            </div>
+            {!isMobile && <NavLinks className={styles.navlinks}></NavLinks>}
+            <div className={styles.icons}>
+              <Link className={styles.icons__link} to={routes.cart.create()}>
+                <BagIcon width={30} height={30} />
+                {cnt > 0 && (
+                  <Text tag="div" className={styles.icons__link__text}>
+                    {cnt > 99 ? '99+' : cnt}
+                  </Text>
+                )}
+              </Link>
+              {isMobile &&
+                (menuOpen ? (
+                  <CrossIcon onClick={toggleMenuOpen} className={styles.cross} width={30} height={30}></CrossIcon>
+                ) : (
+                  <BurgerIcon onClick={toggleMenuOpen} className={styles.burger} width={30} height={30}></BurgerIcon>
+                ))}
             </div>
           </div>
         </div>
-        {headerStore.menuOpen && (
-          <div className={styles.down}>
-            <NavLinks></NavLinks>
-            <Icons forMobile={false}></Icons>
-          </div>
-        )}
-      </header>
-    </HeaderProvider>
+      </div>
+      {menuOpen && (
+        <div className={styles.down}>
+          <NavLinks className={styles.down__navlinks}></NavLinks>
+        </div>
+      )}
+    </header>
   );
 };
 

@@ -2,7 +2,6 @@ import { observer } from 'mobx-react-lite';
 import React, { useRef } from 'react';
 import Card, { CardSkeleton } from 'components/Card';
 import CartButton from 'components/CartButton';
-// import Loader from 'components/Loader';
 import Paginator from 'components/Paginator';
 import ProductPrice from 'components/ProductPrice';
 import Text from 'components/Text';

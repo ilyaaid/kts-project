@@ -1,7 +1,5 @@
 import React from 'react';
 
-// Твои брейкпоинты из SCSS (должны совпадать)
-
 export const BREAKPOINTS = {
   mobile: 'mobile',
   tablet: 'tablet',
@@ -18,7 +16,7 @@ export function useMediaType(): string {
   const [mediaType, setMediaType] = React.useState<string>(BREAKPOINTS.mobile);
 
   React.useEffect(() => {
-    function updateMediaType() {
+    const updateMediaType = () => {
       const width = window.innerWidth;
 
       if (width >= breakpoints.desktop) {
@@ -28,15 +26,12 @@ export function useMediaType(): string {
       } else {
         setMediaType(BREAKPOINTS.mobile);
       }
-    }
+    };
 
-    // Вызываем сразу при монтировании
     updateMediaType();
 
-    // Добавляем слушатель на изменение размера окна
     window.addEventListener('resize', updateMediaType);
 
-    // Убираем слушатель при размонтировании
     return () => window.removeEventListener('resize', updateMediaType);
   }, []);
 

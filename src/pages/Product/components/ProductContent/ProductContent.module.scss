@@ -4,7 +4,7 @@
   display: grid;
   gap: 48px;
   @include respond-to(mobile) {
-    grid-template-columns: 1fr
+    grid-template-columns: 1fr;
   }
 
   @include respond-to(desktop) {
@@ -54,7 +54,6 @@
   }
   &__text {
     margin-bottom: 48px;
-
   }
 }
 
