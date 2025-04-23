@@ -3,7 +3,7 @@ import React from 'react';
 import Button from 'components/Button';
 import Input from 'components/Input';
 import MultiDropdown, { Option } from 'components/MultiDropdown';
-import { useProductsContext } from 'pages/Products';
+import { useProductsContext } from 'store/ProductsStore';
 import { ProductCategoryModel } from 'store/models/Product';
 import styles from './ProductsSearch.module.scss';
 
@@ -44,6 +44,7 @@ const ProductsSearch: React.FC = () => {
         <form onSubmit={handleSubmit}>
           <div className={styles.search__form}>
             <Input
+              type="text"
               className={styles.search__form__input}
               value={productsStore.filters.selTitle}
               placeholder="Search product"

@@ -1,6 +1,6 @@
 import { action, computed, makeObservable, observable, runInAction } from 'mobx';
 import { ENDPOINTS } from 'api/endpoint';
-import { fetchData } from 'api/fetch';
+import { fetchData } from 'api/fetchData';
 import rootStore from 'store/RootStore';
 import { normalizeProductCategory, ProductCategoryApi, ProductCategoryModel } from 'store/models/Product';
 import {

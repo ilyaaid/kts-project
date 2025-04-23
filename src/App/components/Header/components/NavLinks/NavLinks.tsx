@@ -10,7 +10,6 @@ const NavLinks: React.FC<HTMLAttributes<HTMLDivElement>> = ({ className }) => {
 
   const navLinksData = [
     { address: routes.main.create(), text: 'Products' },
-    // { address: routes.categories.create(), text: 'Categories' },
     { address: routes.about.create(), text: 'About us' },
   ];
 

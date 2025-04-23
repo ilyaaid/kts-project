@@ -1,9 +1,15 @@
+import { observer } from 'mobx-react-lite';
+import { PropsWithChildren } from 'react';
 import { Navigate, RouteObject } from 'react-router';
 import App from 'App/';
 import About from 'pages/About';
 import Cart from 'pages/Cart';
+import Login from 'pages/Login';
 import Product from 'pages/Product';
 import Products from 'pages/Products';
+import Profile from 'pages/Profile';
+import Register from 'pages/Register';
+import rootStore from 'store/RootStore';
 
 export const routes = {
   main: {
@@ -34,7 +40,26 @@ export const routes = {
     mask: '/profile',
     create: () => '/profile',
   },
+  login: {
+    mask: '/login',
+    create: () => '/login',
+  },
+  register: {
+    mask: '/register',
+    create: () => '/register',
+  },
 };
+
+const ProtectedRoute: React.FC<PropsWithChildren & { forAuth?: boolean }> = observer(
+  ({ forAuth = false, children }) => {
+    const isAuth = rootStore.user.isAuth;
+    if (forAuth) {
+      return !isAuth ? children : <Navigate to={routes.profile.create()} replace />;
+    } else {
+      return isAuth ? children : <Navigate to={routes.login.create()} replace />;
+    }
+  },
+);
 
 export const routesConfig: RouteObject[] = [
   {
@@ -62,8 +87,28 @@ export const routesConfig: RouteObject[] = [
         element: <Cart />,
       },
       {
+        path: routes.login.mask,
+        element: (
+          <ProtectedRoute forAuth>
+            <Login />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: routes.register.mask,
+        element: (
+          <ProtectedRoute forAuth>
+            <Register />
+          </ProtectedRoute>
+        ),
+      },
+      {
         path: routes.profile.mask,
-        element: <div>profile!</div>,
+        element: (
+          <ProtectedRoute>
+            <Profile />
+          </ProtectedRoute>
+        ),
       },
     ],
   },

@@ -2,7 +2,7 @@ import _ from 'lodash';
 import { action, computed, makeObservable, observable, runInAction, toJS } from 'mobx';
 import * as qs from 'qs';
 import { ENDPOINTS } from 'api/endpoint';
-import { fetchData } from 'api/fetch';
+import { fetchData } from 'api/fetchData';
 import { QOptions } from 'store/ProductsStore';
 import { ProductModel, normalizeProduct, ProductApi } from 'store/models/Product';
 import {

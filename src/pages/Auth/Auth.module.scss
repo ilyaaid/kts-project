@@ -1,0 +1,41 @@
+.card {
+  max-width: 400px;
+  margin: auto;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.title {
+  text-align: center;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form__group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.input_error {
+  border-color: red;
+  background-color: #ffebeb;
+}
+
+.error_message {
+  color: red;
+}
+
+.server_error_message {
+  color: red;
+  text-align: center;
+}
+
+.switch {
+  text-align: center;
+}

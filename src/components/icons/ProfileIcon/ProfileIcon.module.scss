@@ -1,0 +1,19 @@
+@use "styles/variables.scss" as *;
+
+.fill {
+  &_primary {
+    fill: $color-primary;
+  }
+
+  &_secondary {
+    fill: $color-secondary;
+  }
+
+  &_accent {
+    fill: $color-accent;
+  }
+
+  &_transparent {
+    fill: transparent;
+  }
+}

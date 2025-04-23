@@ -1,20 +1,17 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { AxiosError, AxiosRequestConfig } from 'axios';
-
-export type StrapiResponse = {
-  data: any;
-  meta: any;
-};
 
 export enum RequestMethod {
   GET = 'get',
+  POST = 'post',
 }
 
 export type FetchDataParams = {
   method?: RequestMethod;
   pathname: string;
   qparams?: string;
+  body?: unknown;
   config?: AxiosRequestConfig;
+  token?: string;
 };
 
 export type FetchDataResponse<T> =

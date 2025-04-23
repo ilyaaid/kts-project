@@ -3,7 +3,7 @@ import * as ReactRouter from 'react-router';
 import { STRICT_MODE } from 'config/configureReact';
 import rootStore from 'store/RootStore';
 import Header from './components/Header';
-import './App.module.scss';
+import styles from './App.module.scss';
 
 export default function App() {
   const loc = ReactRouter.useLocation();
@@ -17,9 +17,9 @@ export default function App() {
   }, [loc.pathname, loc.search, navigate]);
 
   const AppInner: JSX.Element = (
-    <div className="app">
+    <div className={styles.app}>
       <Header />
-      <main className="main">
+      <main className={styles.main}>
         <ReactRouter.Outlet />
       </main>
     </div>

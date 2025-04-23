@@ -12,9 +12,9 @@
     "dev:vite": "vite",
     "build:vite": "tsc -b && vite build",
     "preview": "vite preview",
-    "lint": "eslint \"./src/**/*.{js,jsx,ts,tsx}\"",
+    "lint": "eslint \"./src/**/*.{js,jsx,ts,tsx,scss}\"",
     "format": "prettier --write \"./src/**/*.{js,jsx,ts,tsx,scss}\"",
-    "lint:fix": "eslint \"./src/**/*.{js,jsx,ts,tsx}\" --fix"
+    "lint:fix": "eslint \"./src/**/*.{js,jsx,ts,tsx,scss}\" --fix"
   },
   "dependencies": {
     "@eslint/compat": "^1.2.7",

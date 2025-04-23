@@ -3,18 +3,7 @@
 .intro {
   margin: auto;
   margin-bottom: 58px;
-
-  @include respond-to(mobile) {
-    width: 90%;
-  }
-
-  @include respond-to(tablet) {
-    width: 70%;
-  }
-
-  @include respond-to(desktop) {
-    width: 50%;
-  }
+  max-width: 600px;
 
   &__title {
     margin-bottom: 24px;

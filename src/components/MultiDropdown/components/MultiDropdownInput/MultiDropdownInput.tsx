@@ -39,6 +39,7 @@ const MultiDropDownInput: React.FC<MultiDropDownPropsOptions> = (props) => {
   return (
     <Input
       ref={ref}
+      type="text"
       className={classes}
       value={!focus && value.length !== 0 ? getTitle(value) : inputStr}
       disabled={disabled}

@@ -6,10 +6,10 @@ import Text from 'components/Text';
 import BagIcon from 'components/icons/BagIcon';
 import BurgerIcon from 'components/icons/BurgerIcon';
 import CrossIcon from 'components/icons/CrossIcon';
+import ProfileIcon from 'components/icons/ProfileIcon';
 import { routes } from 'config/routes';
 import rootStore from 'store/RootStore';
 import { BREAKPOINTS, useMediaType } from 'utils/useMediaType';
-// import Icons from './components/Icons';
 import NavLinks from './components/NavLinks';
 import styles from './Header.module.scss';
 
@@ -27,6 +27,13 @@ const Header: React.FC = () => {
 
   const cnt = rootStore.cart.getProductsCnt();
 
+  const isLogged: boolean = rootStore.user.isAuth;
+
+  const isProfilePage = [routes.profile.create(), routes.login.create(), routes.register.create()].includes(
+    loc.pathname,
+  );
+  const isCartPage = loc.pathname === routes.cart.create();
+
   return (
     <header className={`${styles.header}`}>
       <div className={styles.up}>
@@ -39,8 +46,11 @@ const Header: React.FC = () => {
             </div>
             {!isMobile && <NavLinks className={styles.navlinks}></NavLinks>}
             <div className={styles.icons}>
+              <Link className={styles.icons__link} to={isLogged ? routes.profile.create() : routes.login.create()}>
+                <ProfileIcon width={30} height={30} logged={isLogged} color={isProfilePage ? 'accent' : 'primary'} />
+              </Link>
               <Link className={styles.icons__link} to={routes.cart.create()}>
-                <BagIcon width={30} height={30} />
+                <BagIcon width={30} height={30} color={isCartPage ? 'accent' : 'primary'} />
                 {cnt > 0 && (
                   <Text tag="div" className={styles.icons__link__text}>
                     {cnt > 99 ? '99+' : cnt}

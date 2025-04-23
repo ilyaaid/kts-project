@@ -1,22 +1,19 @@
-import { observer, useLocalObservable } from 'mobx-react-lite';
+import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { useNavigate, useParams } from 'react-router';
 import Loader from 'components/Loader';
 import Text from 'components/Text';
 import ArrowRightIcon from 'components/icons/ArrowRightIcon';
-import ProductStore from 'store/ProductStore';
+import ProductStore, { ProductProvider } from 'store/ProductStore';
+import { useLocalStore } from 'utils/useLocalStore';
 import ProductContent from './components/ProductContent';
 import styles from './Product.module.scss';
-
-const ProductContext = React.createContext<ProductStore | null>(null);
-const ProductProvider = ProductContext.Provider;
-export const useProductContext = () => React.useContext(ProductContext);
 
 const Product: React.FC = () => {
   const params = useParams();
   const navigate = useNavigate();
 
-  const productStore = useLocalObservable<ProductStore>(() => new ProductStore());
+  const productStore = useLocalStore<ProductStore>(() => new ProductStore());
 
   React.useEffect(() => {
     window.scrollTo(0, 0);

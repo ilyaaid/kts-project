@@ -1,7 +1,7 @@
 import { action, computed, makeObservable, observable, runInAction } from 'mobx';
 import * as qs from 'qs';
 import { ENDPOINTS } from 'api/endpoint';
-import { fetchData } from 'api/fetch';
+import { fetchData } from 'api/fetchData';
 import { normalizeProduct, ProductModel } from 'store/models/Product';
 import logger from 'utils/logger';
 import { ILocalStore } from 'utils/useLocalStore';

@@ -1,15 +1,10 @@
-import React, { createContext, useContext } from 'react';
+import React from 'react';
 import Text from 'components/Text';
-import ProductsStore from 'store/ProductsStore';
+import ProductsStore, { ProductsProvider } from 'store/ProductsStore';
 import { useLocalStore } from 'utils/useLocalStore';
 import ProductsList from './components/ProductsList';
 import ProductsSearch from './components/ProductsSearch';
 import styles from './Procuts.module.scss';
-
-const ProductsContext = createContext<ProductsStore | null>(null);
-const ProductsProvider = ProductsContext.Provider;
-
-export const useProductsContext = () => useContext(ProductsContext);
 
 const Products: React.FC = () => {
   const productsStore = useLocalStore<ProductsStore>(() => new ProductsStore());

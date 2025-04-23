@@ -6,7 +6,7 @@ import Paginator from 'components/Paginator';
 import ProductPrice from 'components/ProductPrice';
 import Text from 'components/Text';
 import { routes } from 'config/routes';
-import { useProductsContext } from 'pages/Products';
+import { useProductsContext } from 'store/ProductsStore';
 import styles from './ProductsList.module.scss';
 
 const ProductsList: React.FC = () => {

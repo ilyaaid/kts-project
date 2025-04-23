@@ -14,13 +14,20 @@ export type InputProps = Omit<React.InputHTMLAttributes<HTMLInputElement>, 'onCh
 
 const Input = React.forwardRef<HTMLInputElement, InputProps>((props, ref) => {
   const { className, value, onChange, afterSlot, placeholder, disabled, ...other } = props;
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    onChange(event.target.value);
-  };
-  const classesWrapper = classNames(className, styles['wrapper'], {
-    [styles['wrapper_slot']]: afterSlot,
-    [styles['wrapper_disabled']]: disabled,
-  });
+  const handleChange = React.useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      onChange(event.target.value);
+    },
+    [onChange],
+  );
+  const classesWrapper = classNames(
+    styles['wrapper'],
+    {
+      [styles['wrapper_slot']]: afterSlot,
+      [styles['wrapper_disabled']]: disabled,
+    },
+    className,
+  );
   const classes = classNames(styles['elem'], textStyles['default'], textStyles['view_p-16']);
   const after = afterSlot ? true : false;
   return (
@@ -28,7 +35,6 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>((props, ref) => {
       <input
         {...other}
         ref={ref}
-        type="text"
         className={classes}
         value={value}
         onChange={handleChange}

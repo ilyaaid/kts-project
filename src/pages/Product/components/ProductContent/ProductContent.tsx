@@ -4,7 +4,7 @@ import React from 'react';
 import CartButton from 'components/CartButton';
 import ProductPrice from 'components/ProductPrice';
 import Text from 'components/Text';
-import { useProductContext } from 'pages/Product';
+import { useProductContext } from 'store/ProductStore';
 import CircleArrow from '../CircleArrow';
 
 import styles from './ProductContent.module.scss';

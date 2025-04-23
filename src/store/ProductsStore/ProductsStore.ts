@@ -1,7 +1,7 @@
 import { action, computed, IReactionDisposer, makeObservable, observable, reaction, runInAction } from 'mobx';
 import * as qs from 'qs';
 import { ENDPOINTS } from 'api/endpoint';
-import { fetchData } from 'api/fetch';
+import { fetchData } from 'api/fetchData';
 import Paginator from 'store/PaginatorStore';
 import ProductsFiltersStore from 'store/ProductsFiltersStore';
 import rootStore from 'store/RootStore';

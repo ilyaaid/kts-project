@@ -18,11 +18,15 @@
   justify-content: space-between;
 }
 
-.total {
-  margin-bottom: 40px;
+.userinfo {
+  &__item {
+    display: flex;
+    justify-content: space-between;
+  }
 }
 
 .btn {
+  margin-top: 30px;
   width: 100%;
   border-radius: 10px;
 }
