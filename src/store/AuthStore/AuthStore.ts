@@ -13,7 +13,7 @@ type PrivateFields = '_formData' | '_formErrors' | '_isSubmitting' | '_validate'
 export default class AuthStore implements ILocalStore {
   private readonly _mode: ModeType;
   private readonly _isReg: boolean;
-  private _formData: FormData = this._getInitialFormData();
+  private _formData: FormData;
   private _formErrors: FormErrors = {};
   private _isSubmitting: boolean = false;
   private _isSuccess: boolean = false;
@@ -21,6 +21,7 @@ export default class AuthStore implements ILocalStore {
   constructor(mode: ModeType) {
     this._mode = mode;
     this._isReg = mode === ModeValue.REG;
+    this._formData = this._getInitialFormData();
 
     makeObservable<AuthStore, PrivateFields>(this, {
       _formData: observable.ref,
@@ -84,26 +85,26 @@ export default class AuthStore implements ILocalStore {
     if (this._isReg) {
       const username = this._formData.username!;
       if (!username.trim()) {
-        newErrors.username = 'Имя пользователя обязательно';
+        newErrors.username = 'Username is required';
       } else if (username.length < 3) {
-        newErrors.username = 'Имя пользователя должно быть не менее 3 символов';
+        newErrors.username = 'Username must be at least 3 characters long';
       }
 
       if (this._formData.password !== this._formData.confirmPassword) {
-        newErrors.confirmPassword = 'Пароли не совпадают';
+        newErrors.confirmPassword = 'Passwords do not match';
       }
     }
 
     if (!this._formData.email) {
-      newErrors.email = 'Email обязателен';
+      newErrors.email = 'Email is required';
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(this._formData.email)) {
-      newErrors.email = 'Некорректный email';
+      newErrors.email = 'Invalid email format';
     }
 
     if (!this._formData.password) {
-      newErrors.password = 'Пароль обязателен';
+      newErrors.password = 'Password is required';
     } else if (this._formData.password.length < 6) {
-      newErrors.password = 'Пароль должен быть не менее 6 символов';
+      newErrors.password = 'Password must be at least 6 characters long';
     }
 
     this._formErrors = newErrors;
@@ -137,7 +138,7 @@ export default class AuthStore implements ILocalStore {
     if (!response.success) {
       let errMes: string = 'Error while registration';
       if (response.data.response) {
-        errMes = (response.data.response.data as { message: string }).message ?? 'Error on server';
+        errMes = (response.data.response.data as { error: { message: string } }).error.message ?? 'Error on server';
       }
 
       runInAction(() => {

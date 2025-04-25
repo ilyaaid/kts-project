@@ -101,12 +101,15 @@ export default class ProductsStore implements ILocalStore {
         (el: ProductModel) => el.documentId,
       );
       const meta = normalizeMeta(data.meta);
-      this.paginator.setParams({
-        page: meta.pagination.page,
-        pageSize: meta.pagination.pageSize,
-        pageCount: meta.pagination.pageCount,
-        total: meta.pagination.total,
-      });
+      if (meta) {
+        this.paginator.setParams({
+          page: meta.pagination.page,
+          pageSize: meta.pagination.pageSize,
+          pageCount: meta.pagination.pageCount,
+          total: meta.pagination.total,
+        });
+      }
+
       runInAction(() => {
         this._products = normData;
       });
