@@ -1,0 +1,9 @@
+@use "styles/variables.scss" as *;
+
+.dropdown {
+  position: relative;
+
+  &__input_empty {
+    color: $input-placeholder;
+  }
+}

@@ -1,0 +1,51 @@
+@use "styles/variables.scss" as *;
+
+.wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  border: 1px solid $input-border;
+  color: $input-text;
+  background-color: $input-bg;
+  border-radius: 10px;
+  overflow: hidden;
+
+  &:focus-within {
+    border: 1px solid $input-border-focus;
+    color: $input-text-focus;
+    background-color: $input-bg-focus;
+  }
+
+  &_disabled {
+    border: 1px solid $input-border-disabled;
+    color: $input-text-disabled;
+    background-color: $input-bg-disabled;
+  }
+}
+
+.elem {
+  display: block;
+  flex-grow: 1;
+  border: none;
+  outline: none;
+  padding: 1em 12px;
+  background-color: inherit;
+
+  &::placeholder {
+    color: $input-placeholder;
+  }
+
+  &:disabled {
+    background-color: inherit;
+    color: inherit;
+  }
+}
+
+.after {
+  background-color: inherit;
+  padding: 0px 12px;
+  & > svg {
+    display: block;
+  }
+}

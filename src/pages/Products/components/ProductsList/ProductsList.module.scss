@@ -1,0 +1,61 @@
+@use "styles/mixins.scss" as *;
+
+.list {
+  &__title {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    margin-bottom: 35px;
+  }
+
+  &__loader {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &__items {
+    display: grid;
+
+    @include respond-to(mobile) {
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+
+    @include respond-to(tablet) {
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+    }
+
+    @include respond-to(desktop) {
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 80px;
+    }
+  }
+
+  &__item {
+    transition: all 0.5s ease;
+    text-decoration: none;
+
+    &__instock {
+      color: green;
+    }
+
+    &__outstock {
+      color: red;
+    }
+
+    &:hover {
+      transform: scale(1.01);
+    }
+  }
+
+  &__paginator {
+    display: flex;
+    justify-content: center;
+    margin-top: 70px;
+  }
+}
+
+.notfound {
+}

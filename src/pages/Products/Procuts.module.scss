@@ -1,0 +1,16 @@
+@use "styles/mixins.scss" as *;
+
+.intro {
+  margin: auto;
+  margin-bottom: 58px;
+  max-width: 600px;
+
+  &__title {
+    margin-bottom: 24px;
+    text-align: center;
+  }
+
+  &__description {
+    text-align: center;
+  }
+}

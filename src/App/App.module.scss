@@ -1,0 +1,32 @@
+@use "styles/mixins.scss" as *;
+
+:global(.container) {
+  margin: auto;
+
+  @include respond-to(mobile) {
+    padding: 0 2%;
+  }
+
+  @include respond-to(tablet) {
+    padding: 0 3%;
+  }
+
+  @include respond-to(desktop) {
+    padding: 0 6%;
+  }
+}
+.main {
+  background-color: #fafafa;
+
+  @include respond-to(mobile) {
+    padding: 30px 0;
+  }
+
+  @include respond-to(tablet) {
+    padding: 50px 0;
+  }
+
+  @include respond-to(desktop) {
+    padding: 70px 0;
+  }
+}

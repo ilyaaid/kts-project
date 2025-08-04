@@ -1,0 +1,62 @@
+.profileCard {
+  max-width: 400px;
+  margin: auto;
+  background-color: #ffffff;
+  padding: 20px 20px;
+  border-radius: 10px;
+  transition: transform 0.5s ease;
+}
+
+.profileCard:hover {
+  transform: scale(1.01);
+}
+
+.avatar {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 20px;
+  background: linear-gradient(135deg, #6e8efb, #a777e3);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.username {
+  margin-bottom: 24px;
+  color: #333;
+}
+
+.infoItem {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  border-bottom: 1px solid #eee;
+}
+
+.infoLabel {
+  color: #666;
+}
+
+.infoValue {
+  color: #333;
+}
+
+.logoutButton {
+  margin-top: 32px;
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  transition: all 0.3s ease;
+  background-color: #ff4757;
+  color: white;
+
+  &:hover {
+    background-color: #d60000;
+  }
+
+  &:active {
+    background-color: #ff4757;
+  }
+}

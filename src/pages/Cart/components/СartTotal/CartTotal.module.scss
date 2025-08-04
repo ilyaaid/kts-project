@@ -1,0 +1,32 @@
+@use "styles/variables.scss" as *;
+
+.title {
+  margin-bottom: 30px;
+}
+
+.calc_sum {
+  padding-bottom: 20px;
+  margin-bottom: 30px;
+  border-bottom: 3px solid $text-secondary;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.sum_item {
+  display: flex;
+  justify-content: space-between;
+}
+
+.userinfo {
+  &__item {
+    display: flex;
+    justify-content: space-between;
+  }
+}
+
+.btn {
+  margin-top: 30px;
+  width: 100%;
+  border-radius: 10px;
+}

@@ -1,0 +1,32 @@
+@use "styles/variables.scss" as *;
+
+.nav {
+  display: flex;
+  gap: 20px;
+}
+
+.link {
+  display: flex;
+  align-self: stretch;
+  justify-content: center;
+  color: $text-primary;
+  text-decoration: none;
+  padding: 0 3px;
+
+  &__text {
+    align-self: center;
+  }
+
+  &:hover {
+    color: $text-accent;
+  }
+
+  &_active {
+    border-bottom: 2px solid $brand;
+    margin-bottom: -2px;
+  }
+
+  &_active > &__text {
+    font-weight: 600;
+  }
+}

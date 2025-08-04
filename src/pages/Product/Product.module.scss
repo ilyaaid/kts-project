@@ -1,0 +1,39 @@
+@use "styles/variables.scss" as *;
+
+.back {
+  margin-bottom: 32px;
+
+  &__inner {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+
+    &:hover * {
+      stroke: $text-secondary;
+      color: $text-secondary;
+    }
+  }
+
+  &__icon {
+    transform: rotate(180deg);
+  }
+
+  &__text {
+    padding: 12px 13px;
+  }
+}
+
+.related {
+  padding-top: 48px;
+  &__title {
+    display: inline-block;
+    margin-bottom: 32px;
+  }
+
+  &__list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 80px;
+  }
+}

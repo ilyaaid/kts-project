@@ -1,0 +1,59 @@
+@use "styles/variables.scss" as *;
+@use "styles/mixins.scss" as *;
+
+.item {
+  display: grid;
+  gap: 30px;
+
+  @include respond-to(mobile) {
+    grid-template-columns: 1fr;
+  }
+
+  @include respond-to(tablet) {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  @include respond-to(desktop) {
+    grid-template-columns: 20% auto 20%;
+  }
+
+  &__img {
+    display: block;
+    width: 100%;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 10px;
+  }
+}
+
+.inf {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 20px 0;
+  &__link {
+    text-decoration: none;
+    &:hover * {
+      color: $text-accent;
+    }
+  }
+
+  &__quantity {
+    margin-bottom: auto;
+  }
+
+  &__price__text {
+    display: flex;
+    align-items: flex-end;
+    gap: 10px;
+  }
+}
+
+.actions {
+  flex-grow: 1;
+
+  &__btns {
+    display: flex;
+    align-items: center;
+  }
+}

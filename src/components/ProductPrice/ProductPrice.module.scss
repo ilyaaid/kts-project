@@ -1,0 +1,7 @@
+.disc_text {
+  text-decoration: line-through;
+}
+
+.disc_text + .final_text {
+  color: green;
+}

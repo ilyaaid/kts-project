@@ -1,0 +1,28 @@
+.circle {
+  border: none;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #000000;
+  box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.2);
+  border-radius: 50%;
+  cursor: pointer;
+
+  &:hover {
+    opacity: 0.6;
+  }
+
+  &:disabled {
+    opacity: 0.6;
+  }
+
+  &__arrow {
+    width: 50%;
+    height: 50%;
+
+    & > path {
+      stroke: #ffffff;
+    }
+  }
+}

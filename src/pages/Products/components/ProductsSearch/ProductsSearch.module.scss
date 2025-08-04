@@ -1,0 +1,19 @@
+@use "styles/mixins.scss" as *;
+
+.search {
+  margin-bottom: 48px;
+
+  &__form {
+    display: flex;
+    gap: 24px;
+    margin-bottom: 24px;
+
+    &__input {
+      flex-grow: 1;
+    }
+  }
+
+  &__filter {
+    max-width: 350px;
+  }
+}
