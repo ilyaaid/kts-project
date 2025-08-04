@@ -89,7 +89,7 @@ const config: webpack.Configuration = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: path.join(ROOT_PATH, 'index.html'),
+      template: path.join(ROOT_PATH, 'index.webpack.html'),
     }),
     new MiniCssExtractPlugin({
       filename: !isProd ? '[name].css' : '[name]_[contenthash].css',

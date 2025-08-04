@@ -1,57 +1,40 @@
-# KTS Project (E-commmerce)
+# Проект E-commerce в школе KTS
+Задачей проекта являлась разработка минимального интерфейса для интернет магазина Lalasia.
+Интеграция с бэкендом реализована через CMS Strapi.
+
+За основу взяты макеты страницы по ссылке: [макеты](https://www.figma.com/design/V105wd67bkF2X7oOzCLPEG/E-commerce?node-id=0-1&t=3skRAvravYyuAx01-1)
+
+## Реализованные дополнительно возможности
+
+1) Регистрация и авторизация на сайте с помощью JWT токена
+2) Реализация корзины и страницы с выбранным списком товаров для покупки
+3) Мобильная версия сайта
+
+## Стек технологий
+1) **React**
+2) Роутинг: **ReactRouter**
+3) Менеджер состояния: **MobX**
+4) Линтер **eslint** и форматировщик кода **prettier** 
+5) Сборщики **Vite** и **Webpack**
 
 
-# React + TypeScript + Vite
+## Установка и запуск
+Можно использовать любой из пакетных менеджеров: yarn, npm. В данном случае будет использоваться yarn.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+Для установки зависимостей использовать команду:
+```
+yarn install
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+В качестве сборщика можно использовать Vite или Webpack
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+```bash
+# Для режима разработки 
+yarn dev:webpack   # (Webpack)
+yarn dev:vite      # (Vite)
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+# Для сборки
+yarn build:webpack # (Webpack)
+yarn build:vite    # (Vite)
 ```
